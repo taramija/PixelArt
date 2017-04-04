@@ -41,13 +41,13 @@ void MainWindow::paintEvent(QPaintEvent*e)
             painter.drawPixmap(R, *pixmap); //once again, the image will be stretched... How could you do to overcome this issue??
         }
     }else if(function ==2){
-        for(int i = 0; i < img->width(); i+5){
-            for(int j = 0; j < img->height(); i+5){
+        for(int i = 0; i < img->width(); i+=5){
+            for(int j = 0; j < img->height(); j+=5){
                 QVector<int> colorVal;
                 int temp = 0;
 
-                for(int k = 0; k < i+5; k++){
-                    for(int l = 0; l < j+5; l++)
+                for(int k = i; k < i+5; k++){
+                    for(int l = j; l < j+5; l++)
                         colorVal.append(img->pixel(k,l));
                 }
 
@@ -88,11 +88,9 @@ void MainWindow::on_btnLoad_clicked()
     if (pixmap) delete pixmap;
 
     //we create a pixmap
-//    QImage *img = new QImage();
+    //    QImage *img = new QImage();
     img = new QImage(filePath);
     pixmap = new QPixmap(filePath);
-
-    qDebug() << img->pixel(4,5);
 
     cout <<pixmap<<endl;
     //we create a rectangle in which we are going to draw the pixmap
