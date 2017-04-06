@@ -1,5 +1,7 @@
 #ifndef PIXELCUBE_H
 #define PIXELCUBE_H
+#include <QVector>
+#include <QImage>
 
 class PixelCube
 {
@@ -17,7 +19,7 @@ public:
     int getBlue(){ return b; }
     int getAlpha(){ return a; }
 
-
+    QImage& findResembleImage(QVector<QImage> il);
 
 private:
     int r,g,b,a;

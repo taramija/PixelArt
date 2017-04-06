@@ -48,6 +48,8 @@ private:
     QVector<QRgb> *meanColorList;
 
     std :: vector < std :: vector < PixelCube > > grid;  // a resizable matrix of tiles
+    std :: vector < std :: vector < PixelCube > >::const_iterator cubePack; // i can't find a perfect name for that
+    std :: vector < PixelCube >::const_iterator cube;
 //    std :: vector < QPixmap* > tile_pixmaps;        // a resizable vector of pointers to QPixmaps.
 
 };
