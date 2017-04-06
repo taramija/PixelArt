@@ -28,29 +28,25 @@ private slots:
 
     void on_btnPixelize_clicked();
 
-    void updatePixmap();
-
     void on_btnArt_clicked();
 
 private:
     Ui::MainWindow *ui;
     QImage *img;
+    QPixmap *pixmap; // pointer to pixamp
     QString filePath; // path to the selected image
-    QStringList filePaths;
-    QPixmap *pixmap;  //pointer to pixamp
-    int function;
-    QSize alignParam;
-    int iniPos;
-    int cubeSize;
-    int topOffset;
-    QVector<QImage> *imgList;
-    QVector<QImage>::iterator it;
-    QVector<QRgb> *meanColorList;
+    QStringList filePaths;  // list to store multiple selected images
+    QSize alignParam;   // to center the image in mainwindow (will be optimized later)
 
-    std :: vector < std :: vector < PixelCube > > grid;  // a resizable matrix of tiles
-    std :: vector < std :: vector < PixelCube > >::const_iterator cubePack; // i can't find a perfect name for that
-    std :: vector < PixelCube >::const_iterator cube;
-//    std :: vector < QPixmap* > tile_pixmaps;        // a resizable vector of pointers to QPixmaps.
+    int iniPos; // preset left offset of the image (will be calculated using alignParam
+    int cubeSize;   // preset pixel cube size
+    int topOffset;  // preset top offset of the image
+
+    QVector<QImage> *imgList;   // list to store multiple images
+
+    std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
+
+    //    std :: vector < QPixmap* > tile_pixmaps;
 
 };
 
