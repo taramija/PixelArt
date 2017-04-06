@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="btnPixelize">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>170</x>
       <y>380</y>
       <width>91</width>
       <height>23</height>
@@ -30,7 +30,7 @@
    <widget class="QPushButton" name="btnLoad">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>40</x>
       <y>380</y>
       <width>91</width>
       <height>23</height>
@@ -51,6 +51,19 @@
     </property>
     <property name="text">
      <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnArt">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>380</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Art it!</string>
     </property>
    </widget>
   </widget>
