@@ -87,8 +87,8 @@ void MainWindow::on_btnPixelize_clicked() {
             int count = 0, r=0,g=0,b=0,a=0;
 
             // loop through every pixels of the pixel cube
-            for(int k = 0; k < cubeSize; k++)
-                for(int l = 0; l < cubeSize; l++){
+            for(int k = 0; k < cubeSize; ++k)
+                for(int l = 0; l < cubeSize; ++l){
 
                     // stopping criterion in case the last cube
                     // that compute data out of image boundary
@@ -115,8 +115,8 @@ void MainWindow::on_btnPixelize_clicked() {
             QRgb meanColor = qRgba(r,g,b,a);
 
             // replace the pixel of the cube by the new color (the same loop above)
-            for(int k = 0; k < cubeSize; k++)
-                for(int l = 0; l < cubeSize; l++)
+            for(int k = 0; k < cubeSize; ++k)
+                for(int l = 0; l < cubeSize; ++l)
 
                     // same stopping criterion as above
                     if (i+k < img->width() && j+l <img->height())
@@ -144,20 +144,20 @@ void MainWindow::on_btnArt_clicked()
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
-    for (int i =0;i<filenames.count();i++)
+    for (int i =0; i< filePaths.count(); i++)
         imgList->append(QImage(filePaths[i]));
 
     // loop through the grid system (cubewise)
     // that we created previously during pixelizing process
 
-    std :: vector < std :: vector < PixelCube > >::const_iterator cubePack;
-    std :: vector < PixelCube >::const_iterator cube;
+    std :: vector < std :: vector < PixelCube > >::iterator cubeRow;
+    std :: vector < PixelCube >::iterator cube;
 
-    for (cubePack = grid.begin(); cubePack != grid.end(); ++cubePack)
-        for (cube = cubePack->begin(); cube != cubePack->end(); ++cube){
+    for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow)
+        for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
             // find the best match image of this cube and update
             // it to img global variable to paint it after this
-            img = *cube.findResembleImage(*imgList);
+            *img = *cube.findResembleImage(*imgList);
 
             updatePixmap(); // draw cube by cube
         }

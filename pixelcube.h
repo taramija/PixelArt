@@ -8,7 +8,7 @@ class PixelCube
 public:
     // constructors
     PixelCube();
-    PixelCube(int red, int green, int blue, int alpha){
+    PixelCube(int &red, int &green, int &blue, int &alpha){
         r = red;
         g = green;
         b = blue;
@@ -19,25 +19,25 @@ public:
     ~PixelCube();
 
     // mutators
-    void setRed(int red){ r = red; }
-    void setGreen(int green){ g = green; }
-    void setBlue(int blue){ b = blue; }
-    void setAlpha(int alpha){ a = alpha; }
-    void setBestMatchedImage(QImage *img){ bestMatchedImage = img; }
+    void setRed(const int &red){ r = red; }
+    void setGreen(const int &green){ g = green; }
+    void setBlue(const int &blue){ b = blue; }
+    void setAlpha(const int &alpha){ a = alpha; }
+    void setBestMatchedImage(const QImage &img){ bestMatchedImage = img; }
 
     // accessors
-    int getRed(){ return r; }
-    int getGreen(){ return g; }
-    int getBlue(){ return b; }
-    int getAlpha(){ return a; }
-    QImage& getBestMatchedImage(){ return bestMatchedImage;}
+    int getRed() const { return r; }
+    int getGreen() const { return g; }
+    int getBlue() const { return b; }
+    int getAlpha() const { return a; }
+    QImage& getBestMatchedImage() const { return bestMatchedImage;}
 
     // function to find the best matched image in a list of images
-    QImage& findResembleImage(QVector<QImage> *il);
+    QImage& findResembleImage(QVector<QImage> &il);
 
 private:
     int r,g,b,a;
-    QImage *bestMatchedImage;
+    QImage bestMatchedImage;
 };
 
 #endif // PIXELCUBE_H

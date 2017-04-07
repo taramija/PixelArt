@@ -17,9 +17,11 @@ public:
     ~MainWindow();
     void paintEvent(QPaintEvent*);
 
-    void setPixelCube (int i, int j, PixelCube cube)  { /*assert ( i < n_rows && j < n_cols );*/ grid[i][j] = cube; }
+    // mutator
+    void setPixelCube (const int i, const int j, const PixelCube &cube)  { /*assert ( i < n_rows && j < n_cols );*/ grid[i][j] = cube; }
 
-    PixelCube& getPixelCube (int i, int j) { /*assert ( i < n_rows && j < n_cols );*/ return grid[i][j]; }
+    // accessor
+    PixelCube& getPixelCube (int i, int j) const { /*assert ( i < n_rows && j < n_cols );*/ return grid[i][j]; }
 
 private slots:
     void on_btnSave_clicked();
@@ -42,7 +44,7 @@ private:
     int cubeSize;   // preset pixel cube size
     int topOffset;  // preset top offset of the image
 
-    QVector<QImage> *imgList;   // list to store multiple images
+    QVector<QImage*> *imgList;   // list to store multiple images
 
     std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
 
