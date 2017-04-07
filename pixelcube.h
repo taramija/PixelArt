@@ -30,7 +30,7 @@ public:
     int getGreen() const { return g; }
     int getBlue() const { return b; }
     int getAlpha() const { return a; }
-    QImage& getBestMatchedImage() const { return bestMatchedImage;}
+    QImage& getBestMatchedImage() { return bestMatchedImage;}
 
     // function to find the best matched image in a list of images
     QImage& findResembleImage(QVector<QImage> &il);

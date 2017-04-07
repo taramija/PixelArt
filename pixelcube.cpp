@@ -8,7 +8,7 @@ QImage& PixelCube::findResembleImage(QVector<QImage> &il){
     int currentMatchDiff = 255*4;
 
     // the image that close to match with the cube color
-    QImage currentBestMatchedImg = NULL;
+    QImage currentBestMatchedImg;
 
     // declare iteratior (for the loop)
     QVector<QImage>::iterator it;

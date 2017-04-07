@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "pixelcube.h"
 #include <QDebug>
 #include <QPixmap>
 #include <QImage>
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     filePath = QString("");
 
     alignParam = this->size();
-    iniPos = alignParam.width()/2 - 300/2;
+    iniPos = alignParam.width()/2 - 400/2;
     cubeSize = 5;
     topOffset = 50;
 }
@@ -123,8 +124,11 @@ void MainWindow::on_btnPixelize_clicked() {
                         img->setPixel(i+k, j+l, meanColor);
 
             // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
-            setPixelCube(i, j, PixelCube(r,g,b,a));
 
+            PixelCube *newcube = new PixelCube(r,g,b,a);
+            setPixelCube(i, j, *newcube);
+
+            delete newcube;
         }
 
     update();
@@ -144,7 +148,7 @@ void MainWindow::on_btnArt_clicked()
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
-    for (int i =0; i< filePaths.count(); i++)
+    for (int i =0; i < filePaths.count(); i++)
         imgList->append(QImage(filePaths[i]));
 
     // loop through the grid system (cubewise)
@@ -157,9 +161,9 @@ void MainWindow::on_btnArt_clicked()
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
             // find the best match image of this cube and update
             // it to img global variable to paint it after this
-            *img = *cube.findResembleImage(*imgList);
+            *img = (*cube).findResembleImage(*imgList);
 
-            updatePixmap(); // draw cube by cube
+            update(); // draw cube by cube
         }
 }
 
