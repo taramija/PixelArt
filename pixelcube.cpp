@@ -1,4 +1,17 @@
 #include "pixelcube.h"
+#include <QColor>
+
+
+
+PixelCube :: PixelCube() {
+
+    //do things here
+}
+
+PixelCube :: ~PixelCube() {
+
+    //do things here
+}
 
 QImage& PixelCube::findResembleImage(QVector<QImage> &il){
 
@@ -17,7 +30,7 @@ QImage& PixelCube::findResembleImage(QVector<QImage> &il){
     for(it = il.begin(); it != il.end(); ++it){
 
         int count,red=0,green=0,blue=0,alpha=0;
-        int rDiff,gDiff,bDiff,aDiff,totalDiff;
+        int rDiff=0,gDiff=0,bDiff=0,aDiff=0,totalDiff=0;
 
         // find the most representative color from images
         // as what happened in pixelizing image function

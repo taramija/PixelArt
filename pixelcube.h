@@ -8,7 +8,7 @@ class PixelCube
 public:
     // constructors
     PixelCube();
-    PixelCube(int &red, int &green, int &blue, int &alpha){
+    PixelCube(int red, int green, int blue, int alpha){
         r = red;
         g = green;
         b = blue;

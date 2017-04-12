@@ -32,6 +32,8 @@ private slots:
 
     void on_btnArt_clicked();
 
+    void updatePixmap();
+
 private:
     Ui::MainWindow *ui;
     QImage *img;

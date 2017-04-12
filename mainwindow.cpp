@@ -21,8 +21,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     alignParam = this->size();
     iniPos = alignParam.width()/2 - 400/2;
-    cubeSize = 5;
+    cubeSize = 20;
     topOffset = 50;
+
+    totalRow = ceil(img->width() / cubeSize);
+    totalCol = ceil(img->width() / cubeSize);
+
+    grid.resize (n_rows, std::vector < PixelCube > (n_cols));
 }
 
 MainWindow::~MainWindow()
@@ -36,10 +41,8 @@ void MainWindow::paintEvent(QPaintEvent*e)
     //we create a Drawing context and attach it to the calling object, namely the main window
     QPainter painter(this);
 
-    if(pixmap) delete pixmap;
 
-    pixmap = new QPixmap;
-    *pixmap = QPixmap ::fromImage(*img);
+
 
     if(pixmap) {
 
@@ -74,7 +77,7 @@ void MainWindow::on_btnLoad_clicked()
 
     img = new QImage(filePath);
 
-    update();
+    updatePixmap();
 }
 
 void MainWindow::on_btnPixelize_clicked() {
@@ -131,7 +134,7 @@ void MainWindow::on_btnPixelize_clicked() {
             delete newcube;
         }
 
-    update();
+    updatePixmap();
 }
 
 void MainWindow::on_btnArt_clicked()
@@ -163,7 +166,7 @@ void MainWindow::on_btnArt_clicked()
             // it to img global variable to paint it after this
             *img = (*cube).findResembleImage(*imgList);
 
-            update(); // draw cube by cube
+            updatePixmap(); // draw cube by cube
         }
 }
 
@@ -172,5 +175,14 @@ void MainWindow::on_btnSave_clicked()
 
 }
 
+void MainWindow::updatePixmap(){
+
+    if(pixmap) delete pixmap;
+
+    pixmap = new QPixmap;
+
+    *pixmap = QPixmap ::fromImage(*img);
+
+}
 
 
