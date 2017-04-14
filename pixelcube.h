@@ -23,6 +23,10 @@ public:
     void setGreen(const int &green){ g = green; }
     void setBlue(const int &blue){ b = blue; }
     void setAlpha(const int &alpha){ a = alpha; }
+
+    void setWidth(const int &width){ r = w; }
+    void setHeight(const int &height){ g = h; }
+
     void setBestMatchedImage(const QImage &img){ bestMatchedImage = img; }
 
     // accessors
@@ -30,13 +34,18 @@ public:
     int getGreen() const { return g; }
     int getBlue() const { return b; }
     int getAlpha() const { return a; }
+
+    int getWidth() const { return w; }
+    int getHeight() const { return h; }
+
     QImage& getBestMatchedImage() { return bestMatchedImage;}
 
     // function to find the best matched image in a list of images
-    QImage& findResembleImage(QVector<QImage> &il);
+    QImage& findResembleImage(QVector<QImage> il);
 
 private:
     int r,g,b,a;
+    int w,h;
     QImage bestMatchedImage;
 };
 

@@ -1,8 +1,6 @@
 #include "pixelcube.h"
 #include <QColor>
 
-
-
 PixelCube :: PixelCube() {
 
     //do things here
@@ -13,7 +11,7 @@ PixelCube :: ~PixelCube() {
     //do things here
 }
 
-QImage& PixelCube::findResembleImage(QVector<QImage> &il){
+QImage& PixelCube::findResembleImage(QVector<QImage> il){
 
     // the shortest difference amount of color channels
     // with 255*4 as ini value (255 is maximum color value of a channel)
@@ -79,6 +77,6 @@ QImage& PixelCube::findResembleImage(QVector<QImage> &il){
     bestMatchedImage = currentBestMatchedImg;
 
     // I like to return it too, so it will be convenient using it in action
-    return currentBestMatchedImg;
+    return bestMatchedImage;
 
 }

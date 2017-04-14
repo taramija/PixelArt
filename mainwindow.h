@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <cassert>
 #include "pixelcube.h"
 
 namespace Ui {
@@ -18,21 +19,22 @@ public:
     void paintEvent(QPaintEvent*);
 
     // mutator
-    void setPixelCube (const int i, const int j, const PixelCube &cube)  { /*assert ( i < n_rows && j < n_cols );*/ grid[i][j] = cube; }
+    void setPixelCube (const int i, const int j, const PixelCube &cube)  { assert( i < rows && j < cols ); grid[i][j] = cube; }
+    void setNumRows(const int &numRows)         { rows = numRows; }
+    void setNumCols(const int &numCols)         { cols = numCols; }
 
     // accessor
-    PixelCube& getPixelCube (int i, int j) { /*assert ( i < n_rows && j < n_cols );*/ return grid[i][j]; }
+    PixelCube& getPixelCube (int i, int j) { assert( i < rows && j < cols ); return grid[i][j]; }
+
+    int getNumRows() const        { return rows; }
+    int getNumCols() const        { return cols; }
 
 private slots:
     void on_btnSave_clicked();
-
     void on_btnLoad_clicked();
-
     void on_btnPixelize_clicked();
-
     void on_btnArt_clicked();
-
-    void updatePixmap();
+    void updatePixmap(QImage &processingImg);
 
 private:
     Ui::MainWindow *ui;
@@ -43,11 +45,12 @@ private:
     QSize alignParam;   // to center the image in mainwindow (will be optimized later)
 
     int iniPos; // preset left offset of the image (will be calculated using alignParam
-    int cubeSize;   // preset pixel cube size
     int topOffset;  // preset top offset of the image
+    int cubeSize;   // preset pixel cube size
+    int cols, rows; // col & row number the image cubewise
 
-    QVector<QImage> *imgList;   // list to store multiple images
-
+    QVector<QImage> imgList;   // list to store multiple images
+    QImage *artedImg;
     std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
 
     //    std :: vector < QPixmap* > tile_pixmaps;

@@ -2,12 +2,8 @@
 #include "ui_mainwindow.h"
 #include "pixelcube.h"
 #include <QDebug>
-#include <QPixmap>
-#include <QImage>
 #include <QPainter>
-#include <QColor>
 #include <QFileDialog>
-#include <QBitArray>
 #include <iostream>
 using namespace std;
 
@@ -24,10 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
     cubeSize = 20;
     topOffset = 50;
 
-    totalRow = ceil(img->width() / cubeSize);
-    totalCol = ceil(img->width() / cubeSize);
-
-    grid.resize (n_rows, std::vector < PixelCube > (n_cols));
 }
 
 MainWindow::~MainWindow()
@@ -41,24 +33,22 @@ void MainWindow::paintEvent(QPaintEvent*e)
     //we create a Drawing context and attach it to the calling object, namely the main window
     QPainter painter(this);
 
-
-
-
     if(pixmap) {
 
-        // spit the painting process for 2 cases
-        if(true){  // img load & pixelize function
+//        // spit the painting process for 2 cases
+//        if(artProcess){  // img pixelart function (need different set of position)
+
+//            QRect R( iniPos, topOffset, cubeSize, cubeSize );   // still working on this
+//            painter.scale(1,1);
+//            painter.drawPixmap(R, *pixmap);
+
+//        }else{  // img load & pixelize function
 
             // paint a square 400x400 pixels size, located at a certain position
             QRect R( iniPos, topOffset, 400, 400 );
             painter.scale(1,1);
             painter.drawPixmap(R, *pixmap);
-        }else{  // img pixelart function (need different set of position)
-
-            QRect R( iniPos, topOffset, cubeSize, cubeSize );   // still working on this
-            painter.scale(1,1);
-            painter.drawPixmap(R, *pixmap);
-        }
+//        }
     }
 
 }
@@ -77,7 +67,18 @@ void MainWindow::on_btnLoad_clicked()
 
     img = new QImage(filePath);
 
-    updatePixmap();
+    //set number of pixel cubes will be constructed using this
+    //image, on both axises. Ceil will allow the program to count
+    //the exception where the cubes are cut by the edge of the window
+    //The program will still replace proper proper image onto these cubes normally
+    setNumRows(ceil(img->width() / (double)cubeSize));
+    setNumCols(ceil(img->height() / (double)cubeSize));
+
+    //resize (init the size) the grid vector base on the number of cols and rows above
+    grid.resize (rows, vector <PixelCube> (cols));
+
+    // create new pixmap using this loaded image
+    updatePixmap(*img);
 }
 
 void MainWindow::on_btnPixelize_clicked() {
@@ -118,6 +119,9 @@ void MainWindow::on_btnPixelize_clicked() {
             // combine 4 channels into QRgb data type
             QRgb meanColor = qRgba(r,g,b,a);
 
+            // var to store size of the cube (for exception case with abnormal size)
+            int cubeWidth = cubeSize, cubeHeight = cubeSize;
+
             // replace the pixel of the cube by the new color (the same loop above)
             for(int k = 0; k < cubeSize; ++k)
                 for(int l = 0; l < cubeSize; ++l)
@@ -126,15 +130,30 @@ void MainWindow::on_btnPixelize_clicked() {
                     if (i+k < img->width() && j+l <img->height())
                         img->setPixel(i+k, j+l, meanColor);
 
-            // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
+                    // calculate width for abnormal cube
+                    else if(i+k < img->width())
+                        cubeWidth = img->width() - i;
 
+                    // calculate height for abnormal cube
+                    else if(j+l <img->height())
+                        cubeHeight = img->height() - j;
+
+
+            // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
             PixelCube *newcube = new PixelCube(r,g,b,a);
-            setPixelCube(i, j, *newcube);
+
+            // set width height for this cube
+            newcube->setWidth(cubeWidth);
+            newcube->setHeight(cubeHeight);
+
+            // assign the element for the Grid using the "normalized" i and j indexes
+            setPixelCube(i/cubeSize, j/cubeSize, *newcube);
 
             delete newcube;
         }
 
-    updatePixmap();
+    // create new pixmap using this new image
+    updatePixmap(*img);
 }
 
 void MainWindow::on_btnArt_clicked()
@@ -143,16 +162,18 @@ void MainWindow::on_btnArt_clicked()
     // that he wants to be involed in pixelart process
     filePaths = QFileDialog::getOpenFileNames(
                 this,
-                "BMP files"
-                ,QDir::currentPath(),
-                "Bitmap files (*.bmp);;All files (*.*)" );
+                "Open a file",
+                QString(),
+                "Images (*.png *.gif *.jpg *.jpeg)");
 
     if( filePaths.isEmpty() ) return;
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
-    for (int i =0; i < filePaths.count(); i++)
-        imgList->append(QImage(filePaths[i]));
+    for (int i =0; i < filePaths.size(); i++){
+        QImage *aa = new QImage(filePaths.at(i));
+        imgList.append(*aa);
+    }
 
     // loop through the grid system (cubewise)
     // that we created previously during pixelizing process
@@ -160,14 +181,38 @@ void MainWindow::on_btnArt_clicked()
     std :: vector < std :: vector < PixelCube > >::iterator cubeRow;
     std :: vector < PixelCube >::iterator cube;
 
-    for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow)
+    // use painter to join (by painting) this cube (image) into a big blank
+    // image in order to have a big combination image after processing
+    QPainter painter;
+
+    // choose image to paint in
+    painter.begin(artedImg);
+
+    // index vars for vector loop (I can't find any proper way)
+    int m=0,n=0;
+
+    for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
+
             // find the best match image of this cube and update
             // it to img global variable to paint it after this
-            *img = (*cube).findResembleImage(*imgList);
+            QImage tempImg = (*cube).findResembleImage(imgList);
 
-            updatePixmap(); // draw cube by cube
+            // painting process
+            painter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
+                              tempImg,
+                              QRectF(0,0,cubeSize,cubeSize));
+
+            n++; // increase cube iterator index
         }
+        m++; // increase cubeRow iterator index
+    }
+
+    // end painting (joint process)
+    painter.end();
+
+    // create new pixmap using this big combination image
+    updatePixmap(*artedImg);
 }
 
 void MainWindow::on_btnSave_clicked()
@@ -175,13 +220,13 @@ void MainWindow::on_btnSave_clicked()
 
 }
 
-void MainWindow::updatePixmap(){
+void MainWindow::updatePixmap(QImage &processingImg){
 
     if(pixmap) delete pixmap;
 
     pixmap = new QPixmap;
 
-    *pixmap = QPixmap ::fromImage(*img);
+    *pixmap = QPixmap ::fromImage(processingImg);
 
 }
 
