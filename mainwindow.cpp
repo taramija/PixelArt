@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QPainter>
 #include <QFileDialog>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <iostream>
 using namespace std;
 
@@ -15,11 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     pixmap = NULL;
     filePath = QString("");
 
-    alignParam = this->size();
-    iniPos = alignParam.width()/2 - 400/2;
-    cubeSize = 300;
-    topOffset = 50;
+    cubeSize = 10; // set size of the pixel region
+    status = "new"; // set status of the program
 
+    //    alignParam = this->size();
+    //    iniPos = alignParam.width()/2 - 400/2;
+    //    topOffset = 50;
 }
 
 MainWindow::~MainWindow()
@@ -31,25 +34,17 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent*e)
 {
     //we create a Drawing context and attach it to the calling object, namely the main window
-    QPainter painter(this);
+//    QPainter painter(this);
 
-    if(pixmap) {
 
-//        // spit the painting process for 2 cases
-//        if(artProcess){  // img pixelart function (need different set of position)
 
-//            QRect R( iniPos, topOffset, cubeSize, cubeSize );   // still working on this
-//            painter.scale(1,1);
-//            painter.drawPixmap(R, *pixmap);
+//    if(pixmap) {
+//        // paint a square 400x400 pixels size, located at a certain position
+//        QRect R( iniPos, topOffset, 400, 400 );
+//        painter.scale(1,1);
+//        painter.drawPixmap(R, *pixmap);
 
-//        }else{  // img load & pixelize function
-
-            // paint a square 400x400 pixels size, located at a certain position
-            QRect R( iniPos, topOffset, 400, 400 );
-            painter.scale(1,1);
-            painter.drawPixmap(R, *pixmap);
-//        }
-    }
+//    }
 
 }
 
@@ -59,9 +54,9 @@ void MainWindow::on_btnLoad_clicked()
     //same as drawing in Label: we first get the path to an image to be drawn
     filePath = QFileDialog::getOpenFileName(
                 this,
-                "Open a file",
-                QString(),
-                "Images (*.png *.gif *.jpg *.jpeg)");
+                "Select an image",
+                "d:\\CProject/PixelArt",
+                "Images (*.png *.jpg *.jpeg)");
 
     if (filePath.isEmpty()) return;
 
@@ -77,8 +72,12 @@ void MainWindow::on_btnLoad_clicked()
     //resize (init the size) the grid vector base on the number of cols and rows above
     grid.resize (rows, vector <PixelCube> (cols));
 
+    // update status to track user behavior
+    status = "loaded";
+
     // create new pixmap using this loaded image
     updatePixmap(*img);
+
 }
 
 void MainWindow::on_btnPixelize_clicked() {
@@ -154,8 +153,12 @@ void MainWindow::on_btnPixelize_clicked() {
             delete newcube;
         }
 
+    // update status to track user behavior
+    status = "pixelized";
+
     // create new pixmap using this new image
     updatePixmap(*pixelizedImg);
+
 }
 
 void MainWindow::on_btnArt_clicked()
@@ -164,9 +167,9 @@ void MainWindow::on_btnArt_clicked()
     // that he wants to be involed in pixelart process
     filePaths = QFileDialog::getOpenFileNames(
                 this,
-                "Open a file",
-                QString(),
-                "Images (*.png *.gif *.jpg *.jpeg)");
+                "Select sample images",
+                "d:\\CProject/PixelArt",
+                "Images (*.png *.jpg *.jpeg)");
 
     if( filePaths.isEmpty() ) return;
 
@@ -207,9 +210,6 @@ void MainWindow::on_btnArt_clicked()
             // it to img global variable to paint it after this
             QImage tempImg = (*cube).findResembleImage(imgList);
 
-            qDebug() << m;
-            qDebug() << n;
-
             // painting process
             cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
@@ -223,16 +223,26 @@ void MainWindow::on_btnArt_clicked()
     // end painting (joint process)
     cubePainter.end();
 
+    // update status to track user behavior
+    status = "pixelated";
+
     // create new pixmap using this big combination image
     updatePixmap(artedImg);
+
 }
 
 void MainWindow::on_btnSave_clicked()
 {
+    QString saveName = QFileDialog::getSaveFileName(this, tr("Save the picture"),
+                                "",
+                                tr("Images (*.png *.jpeg *.jpg)"));
 
+    curImg->save(saveName);
 }
 
 void MainWindow::updatePixmap(QImage &processingImg){
+
+    curImg = &processingImg;
 
     if(pixmap) delete pixmap;
 
@@ -240,6 +250,25 @@ void MainWindow::updatePixmap(QImage &processingImg){
 
     *pixmap = QPixmap ::fromImage(processingImg);
 
+
+    // update viewport with new picture
+    QGraphicsScene* scene = new QGraphicsScene(ui->pictureViewport);
+
+    scene->addPixmap(*pixmap);
+
+    ui->pictureViewport->setScene(scene);
+
+    ui->pictureViewport->show();
+
+    // activate buttons
+    if(status == "loaded"){
+        ui->btnPixelize->setEnabled(true);
+        ui->btnSave->setEnabled(true);
+        ui->btnArt->setEnabled(false);
+    }else if(status == "pixelized"){
+        ui->btnArt->setEnabled(true);
+
+    }
 }
 
 

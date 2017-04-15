@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsView>
 #include <cassert>
 #include "pixelcube.h"
 
@@ -38,13 +39,16 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *pictureViewport;
     QImage *img;
     QImage *pixelizedImg;
     QImage artedImg;
+    QImage *curImg; // for saving process
     QPixmap *pixmap; // pointer to pixamp
     QString filePath; // path to the selected image
     QStringList filePaths;  // list to store multiple selected images
     QSize alignParam;   // to center the image in mainwindow (will be optimized later)
+    QString status;  // track user behaviors
 
     int iniPos; // preset left offset of the image (will be calculated using alignParam
     int topOffset;  // preset top offset of the image
