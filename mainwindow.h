@@ -39,6 +39,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QImage *img;
+    QImage *pixelizedImg;
+    QImage artedImg;
     QPixmap *pixmap; // pointer to pixamp
     QString filePath; // path to the selected image
     QStringList filePaths;  // list to store multiple selected images
@@ -50,7 +52,6 @@ private:
     int cols, rows; // col & row number the image cubewise
 
     QVector<QImage> imgList;   // list to store multiple images
-    QImage *artedImg;
     std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
 
     //    std :: vector < QPixmap* > tile_pixmaps;

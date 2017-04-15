@@ -84,10 +84,11 @@ void MainWindow::on_btnLoad_clicked()
 void MainWindow::on_btnPixelize_clicked() {
 
     // duplicate the  image (not yet implemented)
+    pixelizedImg = img;
 
     // loop through every pixels of the image cubewise
-    for(int i = 0; i < img->width(); i += cubeSize)
-        for(int j = 0; j < img->height(); j += cubeSize){
+    for(int i = 0; i < pixelizedImg->width(); i += cubeSize)
+        for(int j = 0; j < pixelizedImg->height(); j += cubeSize){
 
             int count = 0, r=0,g=0,b=0,a=0;
 
@@ -97,10 +98,10 @@ void MainWindow::on_btnPixelize_clicked() {
 
                     // stopping criterion in case the last cube
                     // that compute data out of image boundary
-                    if (i+k < img->width() && j+l <img->height()) {
+                    if (i+k < pixelizedImg->width() && j+l <pixelizedImg->height()) {
 
                         // convert the QRgb to QColor for color extracting process
-                        QColor color(img->pixel(i+k,j+l));
+                        QColor color(pixelizedImg->pixel(i+k,j+l));
 
                         // extract color channels using QColor built-in functions
                         r += color.red();
@@ -127,16 +128,16 @@ void MainWindow::on_btnPixelize_clicked() {
                 for(int l = 0; l < cubeSize; ++l)
 
                     // same stopping criterion as above
-                    if (i+k < img->width() && j+l <img->height())
-                        img->setPixel(i+k, j+l, meanColor);
+                    if (i+k < pixelizedImg->width() && j+l <pixelizedImg->height())
+                        pixelizedImg->setPixel(i+k, j+l, meanColor);
 
                     // calculate width for abnormal cube
-                    else if(i+k < img->width())
-                        cubeWidth = img->width() - i;
+                    else if(i+k < pixelizedImg->width())
+                        cubeWidth = pixelizedImg->width() - i;
 
                     // calculate height for abnormal cube
-                    else if(j+l <img->height())
-                        cubeHeight = img->height() - j;
+                    else if(j+l <pixelizedImg->height())
+                        cubeHeight = pixelizedImg->height() - j;
 
 
             // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
@@ -154,7 +155,7 @@ void MainWindow::on_btnPixelize_clicked() {
         }
 
     // create new pixmap using this new image
-    updatePixmap(*img);
+    updatePixmap(*pixelizedImg);
 }
 
 void MainWindow::on_btnArt_clicked()
@@ -172,8 +173,8 @@ void MainWindow::on_btnArt_clicked()
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
     for (int i =0; i < filePaths.size(); i++){
-        QImage *aa = new QImage(filePaths.at(i));
-        imgList.append(*aa);
+        QImage *image = new QImage(filePaths.at(i));
+        imgList.append(*image);
     }
 
     // loop through the grid system (cubewise)
@@ -186,36 +187,44 @@ void MainWindow::on_btnArt_clicked()
     // image in order to have a big combination image after processing
     QPainter cubePainter;
 
+    // duplicate new image from pixelized image
+    artedImg = *pixelizedImg;
+
     // choose image to paint in
-    QImage artImg(*img);
-    cubePainter.begin(&artImg);
+    cubePainter.begin(&artedImg);
 
-    // index vars for vector loop (I can't find any proper way)
-    int m=0,n=0;
-
+    // index var for row vector loop (I can't find any proper way)
+    int m=0;
 
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
+
+        // index var for col vector loop
+        int n=0;
+
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
 
             // find the best match image of this cube and update
             // it to img global variable to paint it after this
             QImage tempImg = (*cube).findResembleImage(imgList);
 
+            qDebug() << m;
+            qDebug() << n;
+
             // painting process
             cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
                               QRectF(0,0,cubeSize,cubeSize));
 
-            n++; // increase cube iterator index
+            n++; // increase col iterator index
         }
-        m++; // increase cubeRow iterator index
+        m++; // increase row iterator index
     }
 
     // end painting (joint process)
     cubePainter.end();
 
     // create new pixmap using this big combination image
-    updatePixmap(artImg);
+    updatePixmap(artedImg);
 }
 
 void MainWindow::on_btnSave_clicked()
