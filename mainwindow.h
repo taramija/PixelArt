@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QProgressBar>
 #include <cassert>
 #include "pixelcube.h"
 
@@ -36,6 +37,11 @@ private slots:
     void on_btnPixelize_clicked();
     void on_btnArt_clicked();
     void updatePixmap(QImage &processingImg);
+    void popDialog();
+
+    void on_inputSize_editingFinished();
+
+    void on_btnExit_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -49,6 +55,7 @@ private:
     QStringList filePaths;  // list to store multiple selected images
     QSize alignParam;   // to center the image in mainwindow (will be optimized later)
     QString status;  // track user behaviors
+    QProgressBar *bar;
 
     int iniPos; // preset left offset of the image (will be calculated using alignParam
     int topOffset;  // preset top offset of the image

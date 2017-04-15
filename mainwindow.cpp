@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QProgressBar>
 #include <iostream>
 using namespace std;
 
@@ -17,7 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     pixmap = NULL;
     filePath = QString("");
 
-    cubeSize = 10; // set size of the pixel region
+    // set size of the pixel region
+    cubeSize = 10;
+
+    // also set this size to the size selector
+    ui->inputSize->setValue(cubeSize);
+
     status = "new"; // set status of the program
 
     //    alignParam = this->size();
@@ -199,6 +205,11 @@ void MainWindow::on_btnArt_clicked()
     // index var for row vector loop (I can't find any proper way)
     int m=0;
 
+    // loading progress pattern for lcd to display & counter to track progress
+    QString curProgress = ""; double counter = 0;
+
+    popDialog();
+
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
 
         // index var for col vector loop
@@ -214,6 +225,18 @@ void MainWindow::on_btnArt_clicked()
             cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
                               QRectF(0,0,cubeSize,cubeSize));
+
+            // update counter base on total number of pixel cubes (iterators)
+            counter += 100/((double)(rows*cols));
+
+            // round up the counter to be able to get 100% at the end of the process
+            int progress = ceil(counter);
+
+            // set value to progress bar
+            bar->setValue(progress);
+
+            // interfere the process to unfreeze UI due to long processing time
+            QApplication::processEvents();
 
             n++; // increase col iterator index
         }
@@ -250,7 +273,6 @@ void MainWindow::updatePixmap(QImage &processingImg){
 
     *pixmap = QPixmap ::fromImage(processingImg);
 
-
     // update viewport with new picture
     QGraphicsScene* scene = new QGraphicsScene(ui->pictureViewport);
 
@@ -271,4 +293,27 @@ void MainWindow::updatePixmap(QImage &processingImg){
     }
 }
 
+void MainWindow::popDialog(){
+    QDialog *subDialog = new QDialog;
+    subDialog->setWindowTitle("loading");
 
+    subDialog->show();
+
+    bar = new QProgressBar;
+    bar->setParent(subDialog);
+    bar->setRange(0, 100);
+    bar->show();
+}
+
+
+
+
+void MainWindow::on_inputSize_editingFinished()
+{
+    cubeSize = ui->inputSize->value();
+}
+
+void MainWindow::on_btnExit_clicked()
+{
+    this->close();
+}
