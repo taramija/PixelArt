@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     alignParam = this->size();
     iniPos = alignParam.width()/2 - 400/2;
-    cubeSize = 20;
+    cubeSize = 300;
     topOffset = 50;
 
 }
@@ -146,6 +146,7 @@ void MainWindow::on_btnPixelize_clicked() {
             newcube->setWidth(cubeWidth);
             newcube->setHeight(cubeHeight);
 
+
             // assign the element for the Grid using the "normalized" i and j indexes
             setPixelCube(i/cubeSize, j/cubeSize, *newcube);
 
@@ -183,13 +184,15 @@ void MainWindow::on_btnArt_clicked()
 
     // use painter to join (by painting) this cube (image) into a big blank
     // image in order to have a big combination image after processing
-    QPainter painter;
+    QPainter cubePainter;
 
     // choose image to paint in
-    painter.begin(artedImg);
+    QImage artImg(*img);
+    cubePainter.begin(&artImg);
 
     // index vars for vector loop (I can't find any proper way)
     int m=0,n=0;
+
 
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
@@ -199,7 +202,7 @@ void MainWindow::on_btnArt_clicked()
             QImage tempImg = (*cube).findResembleImage(imgList);
 
             // painting process
-            painter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
+            cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
                               QRectF(0,0,cubeSize,cubeSize));
 
@@ -209,10 +212,10 @@ void MainWindow::on_btnArt_clicked()
     }
 
     // end painting (joint process)
-    painter.end();
+    cubePainter.end();
 
     // create new pixmap using this big combination image
-    updatePixmap(*artedImg);
+    updatePixmap(artImg);
 }
 
 void MainWindow::on_btnSave_clicked()

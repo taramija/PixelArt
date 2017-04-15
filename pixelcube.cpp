@@ -1,5 +1,6 @@
 #include "pixelcube.h"
 #include <QColor>
+#include <QDebug>
 
 PixelCube :: PixelCube() {
 
@@ -60,6 +61,8 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
 
         // calculate sum of 4 differences
         totalDiff = rDiff + gDiff +bDiff +aDiff;
+//        qDebug() << r;
+//         qDebug() << red;
 
         // set the current difference and most matched image
         // to this case if the difference amount is smaller
@@ -67,7 +70,7 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
         // , the more the colors match each others)
         if(totalDiff < currentMatchDiff){
             currentMatchDiff = totalDiff;
-             currentBestMatchedImg = il[it - il.begin()]; // it - il.begin() extract current index
+            currentBestMatchedImg = *it;//.at(it - il.begin()); it - il.begin() extract current index
         }
 
     }
@@ -75,6 +78,10 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
     // after searching the whole list of images
     // set the best matched image as an attribue of the cube
     bestMatchedImage = currentBestMatchedImg;
+
+
+//    qDebug() << currentMatchDiff;
+//    qDebug() << currentBestMatchedImg;
 
     // I like to return it too, so it will be convenient using it in action
     return bestMatchedImage;

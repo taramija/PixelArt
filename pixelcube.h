@@ -24,8 +24,8 @@ public:
     void setBlue(const int &blue){ b = blue; }
     void setAlpha(const int &alpha){ a = alpha; }
 
-    void setWidth(const int &width){ r = w; }
-    void setHeight(const int &height){ g = h; }
+    void setWidth(const int &width){ w = width; }
+    void setHeight(const int &height){ h = height; }
 
     void setBestMatchedImage(const QImage &img){ bestMatchedImage = img; }
 
