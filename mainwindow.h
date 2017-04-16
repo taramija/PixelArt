@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QTextEdit>
 #include <QProgressBar>
 #include <cassert>
 #include "pixelcube.h"
@@ -56,6 +57,7 @@ private:
     QSize alignParam;   // to center the image in mainwindow (will be optimized later)
     QString status;  // track user behaviors
     QDialog *subDialog;
+    QTextEdit *textEdit;
     QProgressBar *bar;
 
     int iniPos; // preset left offset of the image (will be calculated using alignParam

@@ -33,8 +33,8 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
 
         // find the most representative color from images
         // as what happened in pixelizing image function
-        for(int m = 0; m < it->width(); ++m)
-            for(int n = 0; n < it->height(); ++n){
+        for(int m = 2; m < it->width()-2; ++m)
+            for(int n = 2; n < it->height()-2; ++n){
 
                 // convert the QRgb to QColor for color extracting process
                 QColor color(it->pixel(m,n));

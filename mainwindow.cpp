@@ -180,12 +180,21 @@ void MainWindow::on_btnArt_clicked()
 
     if( filePaths.isEmpty() ) return;
 
+    // open processing dialog to display progress
+    processDialog();
+
+    // opening promt
+    textEdit->append("Starting..");
+
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
     for (int i =0; i < filePaths.size(); i++){
         QImage *image = new QImage(filePaths.at(i));
         imgList.append(*image);
     }
+
+    textEdit->append("Sample images loaded!");
+    textEdit->append("Begin pixel blocks processing..");
 
     // loop through the grid system (cubewise)
     // that we created previously during pixelizing process
@@ -208,9 +217,6 @@ void MainWindow::on_btnArt_clicked()
     // iterator counter (in percentage) to track progress
     double counter = 0;
 
-    // open processing dialog to display progress
-    processDialog();
-
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
 
         // index var for col vector loop
@@ -222,10 +228,21 @@ void MainWindow::on_btnArt_clicked()
             // it to img global variable to paint it after this
             QImage tempImg = (*cube).findResembleImage(imgList);
 
+            textEdit->append("Best matched image found!");
+
+            // rotate image randomly to prevent resemble image poses
+            // will be pixelated in same color area of the original picture
+            QMatrix rm;
+            rm.rotate((rand() % 4)*90); // random between 0, 1pi, 2pi, 3pi
+            tempImg = tempImg.transformed(rm);  // rotate img
+
+            textEdit->append("Image random pose processing.. " + QString::number((rand() % 4)*90) + " degree rotated");
             // painting process
             cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
                               QRectF(0,0,cubeSize,cubeSize));
+
+            textEdit->append("-> Pixel cube " + QString::number((m+1)*(cols) + (n+1)) + " sucessfully added.");
 
             // update counter base on total number of pixel cubes (iterators)
             counter += 100/((double)(rows*cols));
@@ -250,11 +267,15 @@ void MainWindow::on_btnArt_clicked()
     // update status to track user behavior
     status = "pixelated";
 
+    // finishing promt
+    textEdit->append("... \n finalizing.. ");
+
     // create new pixmap using this big combination image
     updatePixmap(artedImg);
 
     // update processing dialog title
     subDialog->setWindowTitle("Done!");
+    textEdit->append("Done!");
 
 }
 
@@ -303,17 +324,24 @@ void MainWindow::updatePixmap(QImage &processingImg){
 void MainWindow::processDialog(){
 
     // size of the dialog & progress bar
-    int wD = 400, hD = 80, wP = 300, hP = 20;
+    int wD = 350, hD = 500, wP = 300, hP = 20, wT = 300, hT = 400;
 
     subDialog = new QDialog;
     subDialog->setWindowTitle("Processing..");
     subDialog->setGeometry(this->width()/2 - wD/2, this->height()/2 - hD/2, wD, hD);
     subDialog->show();
 
+    // set a text box to print progress promt
+    textEdit = new QTextEdit;
+    textEdit->setParent(subDialog);
+    textEdit->setEnabled(false);
+    textEdit->setGeometry(subDialog->width()/2 - wT/2, 30, wT, hT);
+    textEdit->show();
+
     // set a progress bar in this dialog
     bar = new QProgressBar;
     bar->setParent(subDialog);
-    bar->setGeometry(subDialog->width()/2 - wP/2, subDialog->height()/2 - hP/2, wP, hP);
+    bar->setGeometry(subDialog->width()/2 - wP/2, subDialog->height() - 50, wP, hP);
     bar->setRange(0, 100);
     bar->show();
 }
