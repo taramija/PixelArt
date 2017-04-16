@@ -41,19 +41,16 @@ void MainWindow::paintEvent(QPaintEvent*e)
 {
     //we create a Drawing context and attach it to the calling object, namely the main window
 //    QPainter painter(this);
-
-
-
 //    if(pixmap) {
 //        // paint a square 400x400 pixels size, located at a certain position
 //        QRect R( iniPos, topOffset, 400, 400 );
 //        painter.scale(1,1);
 //        painter.drawPixmap(R, *pixmap);
-
 //    }
 
 }
 
+/***************************** LOAD NEW IMAGE ******************************/
 
 void MainWindow::on_btnLoad_clicked()
 {
@@ -85,6 +82,8 @@ void MainWindow::on_btnLoad_clicked()
     updatePixmap(*img);
 
 }
+
+/***************************** PIXELIZE IMAGE ******************************/
 
 void MainWindow::on_btnPixelize_clicked() {
 
@@ -167,6 +166,8 @@ void MainWindow::on_btnPixelize_clicked() {
 
 }
 
+/***************************** PIXELATE IMAGE ******************************/
+
 void MainWindow::on_btnArt_clicked()
 {
     // open multiple files, the user select a set of images
@@ -188,7 +189,6 @@ void MainWindow::on_btnArt_clicked()
 
     // loop through the grid system (cubewise)
     // that we created previously during pixelizing process
-
     std :: vector < std :: vector < PixelCube > >::iterator cubeRow;
     std :: vector < PixelCube >::iterator cube;
 
@@ -205,10 +205,11 @@ void MainWindow::on_btnArt_clicked()
     // index var for row vector loop (I can't find any proper way)
     int m=0;
 
-    // loading progress pattern for lcd to display & counter to track progress
-    QString curProgress = ""; double counter = 0;
+    // iterator counter (in percentage) to track progress
+    double counter = 0;
 
-    popDialog();
+    // open processing dialog to display progress
+    processDialog();
 
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
 
@@ -252,7 +253,12 @@ void MainWindow::on_btnArt_clicked()
     // create new pixmap using this big combination image
     updatePixmap(artedImg);
 
+    // update processing dialog title
+    subDialog->setWindowTitle("Done!");
+
 }
+
+/***************************** SAVE IMAGE ******************************/
 
 void MainWindow::on_btnSave_clicked()
 {
@@ -263,23 +269,23 @@ void MainWindow::on_btnSave_clicked()
     curImg->save(saveName);
 }
 
+/**************************** MISC. UTILS *****************************/
+
+// create new pixmap for displaying from the processed image
 void MainWindow::updatePixmap(QImage &processingImg){
 
+    // update this var in order to track down which kind of image is being showed
     curImg = &processingImg;
 
+    // delete old pixmap and update new one
     if(pixmap) delete pixmap;
-
     pixmap = new QPixmap;
-
     *pixmap = QPixmap ::fromImage(processingImg);
 
-    // update viewport with new picture
+    // update viewport with new picture using QGraphicView
     QGraphicsScene* scene = new QGraphicsScene(ui->pictureViewport);
-
     scene->addPixmap(*pixmap);
-
     ui->pictureViewport->setScene(scene);
-
     ui->pictureViewport->show();
 
     // activate buttons
@@ -293,26 +299,32 @@ void MainWindow::updatePixmap(QImage &processingImg){
     }
 }
 
-void MainWindow::popDialog(){
-    QDialog *subDialog = new QDialog;
-    subDialog->setWindowTitle("loading");
+// processing dialog with a loading bar to display progress
+void MainWindow::processDialog(){
 
+    // size of the dialog & progress bar
+    int wD = 400, hD = 80, wP = 300, hP = 20;
+
+    subDialog = new QDialog;
+    subDialog->setWindowTitle("Processing..");
+    subDialog->setGeometry(this->width()/2 - wD/2, this->height()/2 - hD/2, wD, hD);
     subDialog->show();
 
+    // set a progress bar in this dialog
     bar = new QProgressBar;
     bar->setParent(subDialog);
+    bar->setGeometry(subDialog->width()/2 - wP/2, subDialog->height()/2 - hP/2, wP, hP);
     bar->setRange(0, 100);
     bar->show();
 }
 
-
-
-
+// input for user to choose size of pixel cubes
 void MainWindow::on_inputSize_editingFinished()
 {
     cubeSize = ui->inputSize->value();
 }
 
+// exit button to close program during fullscreen mode
 void MainWindow::on_btnExit_clicked()
 {
     this->close();

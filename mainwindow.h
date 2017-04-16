@@ -37,7 +37,7 @@ private slots:
     void on_btnPixelize_clicked();
     void on_btnArt_clicked();
     void updatePixmap(QImage &processingImg);
-    void popDialog();
+    void processDialog();
 
     void on_inputSize_editingFinished();
 
@@ -55,6 +55,7 @@ private:
     QStringList filePaths;  // list to store multiple selected images
     QSize alignParam;   // to center the image in mainwindow (will be optimized later)
     QString status;  // track user behaviors
+    QDialog *subDialog;
     QProgressBar *bar;
 
     int iniPos; // preset left offset of the image (will be calculated using alignParam
