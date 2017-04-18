@@ -40,32 +40,43 @@ private slots:
     void updatePixmap(QImage &processingImg);
     void processDialog();
 
+    // signal for Cube Size input
     void on_inputSize_editingFinished();
 
+    // signal for Mode dropdown list input
+    void on_boxMode_activated(const QString &mode);
+
+    // signal for Exit button
     void on_btnExit_clicked();
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *pictureViewport;
-    QImage *img;
-    QImage *pixelizedImg;
-    QImage artedImg;
-    QImage *curImg; // for saving process
-    QPixmap *pixmap; // pointer to pixamp
+
+    QImage *img; // store original img
+    QImage *pixelizedImg; // store pixelized img
+    QImage artedImg; // store arted img
+    QImage *curImg; // store current img being showed
+    QPixmap *pixmap;
+
     QString filePath; // path to the selected image
     QStringList filePaths;  // list to store multiple selected images
-    QSize alignParam;   // to center the image in mainwindow (will be optimized later)
+
     QString status;  // track user behaviors
+
+    // ui components
+    QGraphicsScene *pictureViewport;
     QDialog *subDialog;
     QTextEdit *textEdit;
     QProgressBar *bar;
 
-    int iniPos; // preset left offset of the image (will be calculated using alignParam
-    int topOffset;  // preset top offset of the image
+    // points to locate region of the sample image to do avg calculation
+    // this one change corresponding to combo box "mode" value in the ui
+    int p1,p2,p3,p4;
+
     int cubeSize;   // preset pixel cube size
     int cols, rows; // col & row number the image cubewise
 
-    QVector<QImage> imgList;   // list to store multiple images
+    QVector< QImage > imgList;   // list to store multiple images
     std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
 
     //    std :: vector < QPixmap* > tile_pixmaps;

@@ -41,7 +41,7 @@ public:
     QImage& getBestMatchedImage() { return bestMatchedImage;}
 
     // function to find the best matched image in a list of images
-    QImage& findResembleImage(QVector<QImage> il);
+    QImage& findResembleImage(QVector<QImage> il, int p1, int p2, int p3, int p4);
 
 private:
     int r,g,b,a;

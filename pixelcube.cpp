@@ -12,7 +12,7 @@ PixelCube :: ~PixelCube() {
     //do things here
 }
 
-QImage& PixelCube::findResembleImage(QVector<QImage> il){
+QImage& PixelCube::findResembleImage(QVector<QImage> il, int p1, int p2, int p3, int p4){
 
     // the shortest difference amount of color channels
     // with 255*4 as ini value (255 is maximum color value of a channel)
@@ -31,10 +31,16 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
         int count=0,red=0,green=0,blue=0,alpha=0;
         int rDiff=0,gDiff=0,bDiff=0,aDiff=0,totalDiff=0;
 
+        // set the marks point based on the width and height of the image
+        int mark1 = it->width()*p1/100;
+        int mark2 = it->width()*p2/100;
+        int mark3 = it->height()*p3/100;
+        int mark4 = it->height()*p4/100;
+
         // find the most representative color from images
         // as what happened in pixelizing image function
-        for(int m = 2; m < it->width()-2; ++m)
-            for(int n = 2; n < it->height()-2; ++n){
+        for(int m = mark1; m < mark2; ++m)
+            for(int n = mark3; n < mark4; ++n){
 
                 // convert the QRgb to QColor for color extracting process
                 QColor color(it->pixel(m,n));
@@ -61,8 +67,6 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
 
         // calculate sum of 4 differences
         totalDiff = rDiff + gDiff +bDiff +aDiff;
-//        qDebug() << r;
-//         qDebug() << red;
 
         // set the current difference and most matched image
         // to this case if the difference amount is smaller
@@ -78,10 +82,6 @@ QImage& PixelCube::findResembleImage(QVector<QImage> il){
     // after searching the whole list of images
     // set the best matched image as an attribue of the cube
     bestMatchedImage = currentBestMatchedImg;
-
-
-//    qDebug() << currentMatchDiff;
-//    qDebug() << currentBestMatchedImg;
 
     // I like to return it too, so it will be convenient using it in action
     return bestMatchedImage;

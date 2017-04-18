@@ -173,7 +173,7 @@
      <rect>
       <x>520</x>
       <y>650</y>
-      <width>61</width>
+      <width>71</width>
       <height>41</height>
      </rect>
     </property>
@@ -186,18 +186,90 @@
      </font>
     </property>
     <property name="text">
-     <string>Cube size</string>
+     <string>Mode</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="inputSize_2">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>760</x>
+      <y>650</y>
+      <width>241</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <italic>true</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Size &quot;10&quot;, sample foder &quot;10px_hex&quot;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>650</y>
+      <width>81</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Best setting: </string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="boxMode">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
       <y>660</y>
-      <width>42</width>
+      <width>69</width>
       <height>22</height>
      </rect>
     </property>
+    <item>
+     <property name="text">
+      <string>Fullsize</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Central</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Top left</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Top right</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bottom left</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bottom right</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">

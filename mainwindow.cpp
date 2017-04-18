@@ -16,7 +16,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     pixmap = NULL;
+    subDialog = NULL;
+    textEdit = NULL;
+    bar = NULL;
+
     filePath = QString("");
+    filePaths = QStringList("");
 
     // set size of the pixel region
     cubeSize = 10;
@@ -26,9 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     status = "new"; // set status of the program
 
-    //    alignParam = this->size();
-    //    iniPos = alignParam.width()/2 - 400/2;
-    //    topOffset = 50;
+    // set default processing regions (full size)
+    p1 = 0; p2 = 100; p3 = 0; p4 = 100;
+
 }
 
 MainWindow::~MainWindow()
@@ -39,15 +44,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::paintEvent(QPaintEvent*e)
 {
-    //we create a Drawing context and attach it to the calling object, namely the main window
-//    QPainter painter(this);
-//    if(pixmap) {
-//        // paint a square 400x400 pixels size, located at a certain position
-//        QRect R( iniPos, topOffset, 400, 400 );
-//        painter.scale(1,1);
-//        painter.drawPixmap(R, *pixmap);
-//    }
-
+    // i dont use this func
 }
 
 /***************************** LOAD NEW IMAGE ******************************/
@@ -64,6 +61,7 @@ void MainWindow::on_btnLoad_clicked()
     if (filePath.isEmpty()) return;
 
     img = new QImage(filePath);
+    curImg = img;
 
     //set number of pixel cubes will be constructed using this
     //image, on both axises. Ceil will allow the program to count
@@ -79,7 +77,7 @@ void MainWindow::on_btnLoad_clicked()
     status = "loaded";
 
     // create new pixmap using this loaded image
-    updatePixmap(*img);
+    updatePixmap(*curImg);
 
 }
 
@@ -88,7 +86,7 @@ void MainWindow::on_btnLoad_clicked()
 void MainWindow::on_btnPixelize_clicked() {
 
     // duplicate the  image (not yet implemented)
-    pixelizedImg = img;
+    pixelizedImg = curImg;
 
     // loop through every pixels of the image cubewise
     for(int i = 0; i < pixelizedImg->width(); i += cubeSize)
@@ -184,7 +182,9 @@ void MainWindow::on_btnArt_clicked()
     processDialog();
 
     // opening promt
-    textEdit->append("Starting..");
+//    textEdit->append("Starting..");
+
+    /* if imgList true delete */
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
@@ -193,8 +193,8 @@ void MainWindow::on_btnArt_clicked()
         imgList.append(*image);
     }
 
-    textEdit->append("Sample images loaded!");
-    textEdit->append("Begin pixel blocks processing..");
+//    textEdit->append("Sample images loaded!");
+//    textEdit->append("Begin pixel blocks processing..");
 
     // loop through the grid system (cubewise)
     // that we created previously during pixelizing process
@@ -206,7 +206,7 @@ void MainWindow::on_btnArt_clicked()
     QPainter cubePainter;
 
     // duplicate new image from pixelized image
-    artedImg = *pixelizedImg;
+    artedImg = *curImg;
 
     // choose image to paint in
     cubePainter.begin(&artedImg);
@@ -224,26 +224,32 @@ void MainWindow::on_btnArt_clicked()
 
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
 
-            // find the best match image of this cube and update
+            // passin the sample image and the region to be processed
+            // to find the best match image of this cube and update
             // it to img global variable to paint it after this
-            QImage tempImg = (*cube).findResembleImage(imgList);
+            QImage tempImg = (*cube).findResembleImage(imgList,p1,p2,p3,p4);
 
-            textEdit->append("Best matched image found!");
+//            textEdit->append("Best matched image found!");
 
             // rotate image randomly to prevent resemble image poses
             // will be pixelated in same color area of the original picture
             QMatrix rm;
-            rm.rotate((rand() % 4)*90); // random between 0, 1pi, 2pi, 3pi
+            int deg = (rand() % 4)*90;
+            rm.rotate(deg); // random between 0, 1pi, 2pi, 3pi
             tempImg = tempImg.transformed(rm);  // rotate img
 
-            textEdit->append("Image random pose processing.. " + QString::number((rand() % 4)*90) + " degree rotated");
+            // scale image to fit cube size before start drawing
+            tempImg = tempImg.scaled(cubeSize, cubeSize,Qt::KeepAspectRatio);
+
+//            textEdit->append("Image random pose processing.. " + QString::number(deg) + " degree rotated");
             // painting process
             cubePainter.drawImage(QRectF(m*cubeSize,n*cubeSize,cubeSize,cubeSize),
                               tempImg,
                               QRectF(0,0,cubeSize,cubeSize));
 
-            textEdit->append("-> Pixel cube " + QString::number((m+1)*(cols) + (n+1)) + " sucessfully added.");
+//            textEdit->append("-> Pixel cube " + QString::number((m+1)*(cols) + (n+1)) + " sucessfully rendered.");
 
+            /* ----------------------- Update Loading bar ----------------------*/
             // update counter base on total number of pixel cubes (iterators)
             counter += 100/((double)(rows*cols));
 
@@ -252,6 +258,8 @@ void MainWindow::on_btnArt_clicked()
 
             // set value to progress bar
             bar->setValue(progress);
+
+            /* -----------------------------------------------------------------*/
 
             // interfere the process to unfreeze UI due to long processing time
             QApplication::processEvents();
@@ -268,14 +276,14 @@ void MainWindow::on_btnArt_clicked()
     status = "pixelated";
 
     // finishing promt
-    textEdit->append("... \n finalizing.. ");
+//    textEdit->append("... \n finalizing.. ");
 
     // create new pixmap using this big combination image
     updatePixmap(artedImg);
 
     // update processing dialog title
     subDialog->setWindowTitle("Done!");
-    textEdit->append("Done!");
+//    textEdit->append("Done!");
 
 }
 
@@ -314,14 +322,20 @@ void MainWindow::updatePixmap(QImage &processingImg){
         ui->btnPixelize->setEnabled(true);
         ui->btnSave->setEnabled(true);
         ui->btnArt->setEnabled(false);
+        ui->boxMode->setEnabled(false);
     }else if(status == "pixelized"){
         ui->btnArt->setEnabled(true);
-
+        ui->boxMode->setEnabled(true);
     }
 }
 
 // processing dialog with a loading bar to display progress
 void MainWindow::processDialog(){
+
+    // kill existing dialog if it exists
+//    if(subDialog) delete subDialog;
+//    if(textEdit) delete textEdit;
+//    if(bar) delete bar;
 
     // size of the dialog & progress bar
     int wD = 350, hD = 500, wP = 300, hP = 20, wT = 300, hT = 400;
@@ -352,8 +366,25 @@ void MainWindow::on_inputSize_editingFinished()
     cubeSize = ui->inputSize->value();
 }
 
+// set the mark point ratio upon combo box triggering
+void MainWindow::on_boxMode_activated(const QString &mode)
+{
+    // from 0 to 100 (percentage). after passing in pixelcube constructor
+    // I will devide them by 100 by then. this way I can avoid double casting here
+    // rather than using 0, 1/4, 1/2, 3/4
+
+    if(mode == "Fullsize"){ p1 = 0; p2 = 100; p3 = 0; p4 =100;}
+    else if(mode == "Central"){ p1 = 25; p2 = 75; p3 = 25; p4 = 75;}
+    else if(mode == "Top left"){ p1 = 0; p2 = 50; p3 = 0; p4 = 50;}
+    else if(mode == "Top right"){ p1 = 0; p2 = 50; p3 = 50; p4 = 100;}
+    else if(mode == "Bottom left"){ p1 = 50; p2 = 100; p3 = 0; p4 = 50;}
+    else if(mode == "Bottom right"){ p1 = 50; p2 = 100; p3 = 50; p4 = 100;}
+}
+
 // exit button to close program during fullscreen mode
 void MainWindow::on_btnExit_clicked()
 {
     this->close();
 }
+
+
