@@ -12,78 +12,53 @@ PixelCube :: ~PixelCube() {
     //do things here
 }
 
-QImage& PixelCube::findResembleImage(QVector<QImage> il, int p1, int p2, int p3, int p4){
+int PixelCube::findBestMatchedIndex(QVector<QColor> sampleColors){
 
     // the shortest difference amount of color channels
     // with 255*4 as ini value (255 is maximum color value of a channel)
     // 4 is the total of channels
-    int currentMatchDiff = 255*4;
+    int currentDiff = 255*4;
 
     // the image that close to match with the cube color
-    QImage currentBestMatchedImg;
+    int currentBestMatchedIndex;
 
     // declare iteratior (for the loop)
-    QVector<QImage>::iterator it;
+    QVector<QColor>::iterator it;
 
-    // loop through image list using qvector iterator
-    for(it = il.begin(); it != il.end(); ++it){
+    // loop through sample color list using qvector iterator
+    for(it = sampleColors.begin(); it != sampleColors.end(); ++it){
 
-        int count=0,red=0,green=0,blue=0,alpha=0;
-        int rDiff=0,gDiff=0,bDiff=0,aDiff=0,totalDiff=0;
+        int meanR = 0, meanG = 0, meanB = 0, meanA = 0, totalDiff = 0;
 
-        // set the marks point based on the width and height of the image
-        int mark1 = it->width()*p1/100;
-        int mark2 = it->width()*p2/100;
-        int mark3 = it->height()*p3/100;
-        int mark4 = it->height()*p4/100;
+        // calculate the difference on all 4 channels
+        // by comparing them with the these 4 values of the cube
+        meanR = abs(r - it->red());
+        meanG = abs(g - it->green());
+        meanB = abs(b - it->blue());
+        meanA = abs(a - it->alpha());
 
-        // find the most representative color from images
-        // as what happened in pixelizing image function
-        for(int m = mark1; m < mark2; ++m)
-            for(int n = mark3; n < mark4; ++n){
+        // sum the differences
+        totalDiff = meanR + meanG + meanB + meanA;
 
-                // convert the QRgb to QColor for color extracting process
-                QColor color(it->pixel(m,n));
-
-                // extract color channels using QColor built-in functions
-                red += color.red();
-                green += color.green();
-                blue += color.blue();
-                alpha += color.alpha();
-
-                // count the iteration to get the total pixel of the cube
-                count++;
-            }
-
-        // calculate mean color value of every channels
-        red /= count; green /= count; blue /= count; alpha /= count;
-
-        // calculate the difference on each channel
-        // by comparing them with the rgba value of the cube
-        rDiff = abs(r-red);
-        gDiff = abs(g-green);
-        bDiff = abs(b-blue);
-        aDiff = abs(a-alpha);
-
-        // calculate sum of 4 differences
-        totalDiff = rDiff + gDiff +bDiff +aDiff;
-
-        // set the current difference and most matched image
+        // set the current difference and the index of the iterator
         // to this case if the difference amount is smaller
-        // than the current difference (the smaller the distance is
-        // , the more the colors match each others)
-        if(totalDiff < currentMatchDiff){
-            currentMatchDiff = totalDiff;
-            currentBestMatchedImg = *it;//.at(it - il.begin()); it - il.begin() extract current index
+        // than the current difference (the smaller the distance is,
+        // the more the colors match each others)
+        if(totalDiff < currentDiff){
+            currentDiff = totalDiff;
+
+            //() << it - sampleColors.begin();
+            currentBestMatchedIndex = it - sampleColors.begin(); // extract current index
         }
 
     }
 
-    // after searching the whole list of images
-    // set the best matched image as an attribue of the cube
-    bestMatchedImage = currentBestMatchedImg;
+    // after searching the whole list of sample color
+    // set the best matched index (it's also be the index of the
+    // best matched image) as an attribue of the cube
+    bestMatchIndex = currentBestMatchedIndex;
 
     // I like to return it too, so it will be convenient using it in action
-    return bestMatchedImage;
+    return currentBestMatchedIndex;
 
 }

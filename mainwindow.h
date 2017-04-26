@@ -38,10 +38,12 @@ private slots:
     void on_btnPixelize_clicked();
     void on_btnArt_clicked();
     void updatePixmap(QImage &processingImg);
+    void updateRowNColAmount(QImage &processingImg);
     void processDialog();
 
     // signal for Cube Size input
-    void on_inputSize_editingFinished();
+    void on_inputSizeW_editingFinished();
+    void on_inputSizeH_editingFinished();
 
     // signal for Mode dropdown list input
     void on_boxMode_activated(const QString &mode);
@@ -73,13 +75,13 @@ private:
     // this one change corresponding to combo box "mode" value in the ui
     int p1,p2,p3,p4;
 
-    int cubeSize;   // preset pixel cube size
+    int cubeW;   // preset pixel cube width
+    int cubeH;   // preset pixel cube height
     int cols, rows; // col & row number the image cubewise
 
     QVector< QImage > imgList;   // list to store multiple images
+    QVector< QColor > sampleColorList;   // list to store color of multiple images
     std :: vector < std :: vector < PixelCube > > grid;  // store blocks of pixel
-
-    //    std :: vector < QPixmap* > tile_pixmaps;
 
 };
 

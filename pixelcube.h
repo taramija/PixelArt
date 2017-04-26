@@ -27,7 +27,7 @@ public:
     void setWidth(const int &width){ w = width; }
     void setHeight(const int &height){ h = height; }
 
-    void setBestMatchedImage(const QImage &img){ bestMatchedImage = img; }
+    void setBestMatchIndex(const int index){ bestMatchIndex = index; }
 
     // accessors
     int getRed() const { return r; }
@@ -38,15 +38,16 @@ public:
     int getWidth() const { return w; }
     int getHeight() const { return h; }
 
-    QImage& getBestMatchedImage() { return bestMatchedImage;}
+    int getBestMatchIndex() { return bestMatchIndex;}
 
-    // function to find the best matched image in a list of images
-    QImage& findResembleImage(QVector<QImage> il, int p1, int p2, int p3, int p4);
+    // function to find the best matched index in a list of
+    // sample colors (extracted from the multiple sample images)
+    int findBestMatchedIndex(QVector<QColor> sampleColors);
 
 private:
-    int r,g,b,a;
-    int w,h;
-    QImage bestMatchedImage;
+    int r, g, b, a;
+    int w, h;
+    int bestMatchIndex; // this one will store the position of the best matched image in sample images list
 };
 
 #endif // PIXELCUBE_H
