@@ -2,11 +2,7 @@
 #include "ui_mainwindow.h"
 #include "pixelcube.h"
 #include <QDebug>
-#include <QPainter>
 #include <QFileDialog>
-#include <QGraphicsPixmapItem>
-#include <QGraphicsScene>
-#include <QProgressBar>
 #include <iostream>
 using namespace std;
 
@@ -15,17 +11,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // ini starting values
     pixmap = NULL;
+    pictureViewport = NULL;
     subDialog = NULL;
     textEdit = NULL;
     bar = NULL;
+    rndPose = false;
 
+    status = "";
     filePath = QString("");
     filePaths = QStringList("");
 
     // set size of the pixel region
-    cubeW = 10;
-    cubeH = 10;
+    cubeW = 5;
+    cubeH = 5;
 
 
     // also set this size to the size selector
@@ -44,17 +45,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::paintEvent(QPaintEvent*e)
-{
-    // i dont use this func
-}
-
 /***************************** LOAD NEW IMAGE ******************************/
 
 void MainWindow::on_btnLoad_clicked()
 {
-    //same as drawing in Label: we first get the path to an image to be drawn
+    // close the dialog
+    if(subDialog) subDialog->close();
+
+    // same as drawing in Label: we first get the path to an image to be drawn
     filePath = QFileDialog::getOpenFileName(
                 this,
                 "Select an image",
@@ -78,16 +76,20 @@ void MainWindow::on_btnLoad_clicked()
 
 void MainWindow::on_btnPixelize_clicked() {
 
+    // close the dialog
+    if(subDialog) subDialog->close();
+
     // duplicate the  image (not yet implemented)
     pixelizedImg = curImg;
 
+    // update the size of the grid
     updateRowNColAmount(*pixelizedImg);
 
     // loop through every pixels of the image cubewise
     for(int i = 0; i < pixelizedImg->width(); i += cubeW)
         for(int j = 0; j < pixelizedImg->height(); j += cubeH){
 
-            int count = 0, r=0,g=0,b=0,a=0, totalMean=0;
+            int count = 0, r = 0, g = 0, b = 0, a = 0;
 
             // loop through every pixels of the pixel cube
             for(int k = 0; k < cubeW; ++k)
@@ -150,6 +152,9 @@ void MainWindow::on_btnPixelize_clicked() {
 
             // delete the object (prevent memory leak)
             delete newcube;
+
+            // interfere the process to unfreeze UI due to long processing time
+            QApplication::processEvents();
         }
 
     // update status to track user behavior
@@ -164,6 +169,9 @@ void MainWindow::on_btnPixelize_clicked() {
 
 void MainWindow::on_btnArt_clicked()
 {
+    // close the dialog
+    if(subDialog) subDialog->close();
+
     /* ----------------------- Multiple files Selection ----------------------*/
 
     // open multiple files, the user select a set of images
@@ -174,7 +182,7 @@ void MainWindow::on_btnArt_clicked()
                 "d:\\CProject/PixelArt",
                 "Images (*.png *.jpg *.jpeg)");
 
-    if( filePaths.isEmpty() ) return;
+    if(filePaths.isEmpty()) return;
 
     // open processing dialog to display progress
     processDialog();
@@ -184,12 +192,19 @@ void MainWindow::on_btnArt_clicked()
 
     // clear the previous sample images
     if(!imgList.isEmpty()) imgList.clear();
+//    imgList.resize(filePaths.size());
+//    imgList = new QVector< QImage>;
+
+    // interfere the process to unfreeze UI due to long processing time
+    QApplication::processEvents();
+
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
     for (int i =0; i < filePaths.size(); i++){
         QImage *image = new QImage(filePaths.at(i));
         imgList.append(*image);
+        delete image;
     }
 
     /* ----------------------- Sample Images Processing ----------------------*/
@@ -200,7 +215,7 @@ void MainWindow::on_btnArt_clicked()
     // loop through image list using qvector iterator
     for(sampleImage = imgList.begin(); sampleImage != imgList.end(); ++sampleImage){
 
-        int count=0,red=0,green=0,blue=0,alpha=0,totalMean=0;
+        int count = 0, red = 0, green = 0, blue = 0, alpha = 0;
 
         // set the marks point (to define the region in the sample
         // image that will be processed to compute the mean) based
@@ -237,6 +252,11 @@ void MainWindow::on_btnArt_clicked()
     }
 
     textEdit->append("Sample images loaded!");
+
+    // resize vectors to adapt new datas, the program will crash
+    // without resizing these dynamic variables on the second attempt
+    imgList.resize(filePaths.length());
+    sampleColorList.resize(filePaths.length());
 
     /* ----------------------- Pixel Cube Processing ----------------------*/
 
@@ -280,10 +300,12 @@ void MainWindow::on_btnArt_clicked()
 
             // rotate image randomly to prevent resemble image poses
             // will be pixelated in same color area of the original picture
-//            QMatrix rm;
-//            int deg = (rand() % 4)*90;
-//            rm.rotate(deg); // random between 0, 1pi, 2pi, 3pi
-//            tempImg = tempImg.transformed(rm);  // rotate img
+            if(rndPose){
+                QMatrix rm;
+                int deg = (rand() % 4)*90;
+                rm.rotate(deg);                     // random between 0, 1pi, 2pi, 3pi
+                tempImg = tempImg.transformed(rm);  // rotate img
+            }
 
             // scale image to fit cube size before start drawing
             tempImg = tempImg.scaled(cubeW, cubeH);
@@ -317,6 +339,50 @@ void MainWindow::on_btnArt_clicked()
         m++; // increase row iterator index
     }
 
+    /* ----------------------- Watermark Painting (optional) ----------------------*/
+
+    // in this part I'll load the 2 versions of my watermark based on the
+    // average color of the zone where I put the watermark. If the zone is
+    // dark, I'll load the white watermark, otherwise I'll load the black one
+    QImage *watermark = new QImage();
+
+    int wtmWidth = 215;
+    int wtmHeight = 108;
+
+    int wtmPosX = artedImg.width()-280;
+    int wtmPosY = artedImg.height()-140;
+
+    // same process to calculate average color
+    int wtmCount = 0, wtmR = 0, wtmG = 0, wtmB = 0, wtmA = 0, wtmTotalMean = 0;
+
+    for(int x = wtmPosX; x < wtmPosX + wtmWidth; x++)
+        for(int y = wtmPosY; y < wtmPosY + wtmHeight; y++){
+            QColor wtmColor(artedImg.pixel(x,y));
+            wtmR += wtmColor.red();
+            wtmG += wtmColor.green();
+            wtmB += wtmColor.blue();
+            wtmA += wtmColor.alpha();
+            wtmCount++;
+        }
+
+    wtmR /= wtmCount; wtmG /= wtmCount; wtmB /= wtmCount; wtmA /= wtmCount;
+    wtmTotalMean = wtmR + wtmG + wtmB + wtmA;
+
+    if(wtmTotalMean < 500)
+        watermark->load("D://CProject/PixelArt/extras/wtm_w.png");   // load white watermark
+    else
+        watermark->load("D://CProject/PixelArt/extras/wtm_b.png");   // load black watermark
+
+
+    cubePainter.drawImage(QRectF(artedImg.width()-280,artedImg.height()-140,wtmWidth,wtmHeight),
+                      *watermark,
+                      QRectF(0,0,wtmWidth,wtmHeight));
+
+    delete watermark;
+
+
+    /* --------------------- Ending Process / Paint final image --------------------*/
+
     // end painting (joint process)
     cubePainter.end();
 
@@ -343,12 +409,23 @@ void MainWindow::on_btnArt_clicked()
 
 void MainWindow::on_btnSave_clicked()
 {
+    // close the dialog
+    if(subDialog) subDialog->close();
+
     QString saveName = QFileDialog::getSaveFileName(this, tr("Save the picture"),
                                 "",
                                 tr("Images (*.png *.jpeg *.jpg)"));
 
     curImg->save(saveName);
 }
+
+// exit button to close program during fullscreen mode
+void MainWindow::on_btnExit_clicked()
+{
+    if(subDialog) subDialog->close();
+    this->close();
+}
+
 
 /**************************** MISC. UTILS *****************************/
 
@@ -364,20 +441,22 @@ void MainWindow::updatePixmap(QImage &processingImg){
     *pixmap = QPixmap ::fromImage(processingImg);
 
     // update viewport with new picture using QGraphicView
-    QGraphicsScene* scene = new QGraphicsScene(ui->pictureViewport);
-    scene->addPixmap(*pixmap);
-    ui->pictureViewport->setScene(scene);
-    ui->pictureViewport->show();
+    if(pictureViewport) delete pictureViewport;
+    pictureViewport     = new QGraphicsScene;
+    pictureViewport     ->addPixmap(*pixmap);
+    ui->pictureViewport ->setScene(pictureViewport);
+    ui->pictureViewport ->show();
 
     // activate buttons
     if(status == "loaded"){
-        ui->btnPixelize->setEnabled(true);
-        ui->btnSave->setEnabled(true);
-        ui->btnArt->setEnabled(false);
-        ui->boxMode->setEnabled(false);
+        ui->btnPixelize ->setEnabled    (true );
+        ui->btnSave     ->setEnabled    (true );
+        ui->btnArt      ->setEnabled    (false);
+        ui->boxMode     ->setEnabled    (false);
+
     }else if(status == "pixelized"){
-        ui->btnArt->setEnabled(true);
-        ui->boxMode->setEnabled(true);
+        ui->btnArt      ->setEnabled    (true );
+        ui->boxMode     ->setEnabled    (true );
     }
 }
 
@@ -385,9 +464,9 @@ void MainWindow::updatePixmap(QImage &processingImg){
 void MainWindow::processDialog(){
 
     // kill existing dialog if it exists
-//    if(subDialog) delete subDialog;
-//    if(textEdit) delete textEdit;
-//    if(bar) delete bar;
+    if(textEdit) delete textEdit;
+    if(bar) delete bar;
+    if(subDialog) delete subDialog;
 
     // size of the dialog & progress bar
     int wD = 350, hD = 200, wP = 300, hP = 20, wT = 300, hT = 100;
@@ -430,12 +509,12 @@ void MainWindow::on_boxMode_activated(const QString &mode)
     // I will devide them by 100 by then. this way I can avoid double casting here
     // rather than using 0, 1/4, 1/2, 3/4
 
-    if(mode == "Fullsize"){ p1 = 0; p2 = 100; p3 = 0; p4 =100;}
-    else if(mode == "Central"){ p1 = 25; p2 = 75; p3 = 25; p4 = 75;}
-    else if(mode == "Top left"){ p1 = 0; p2 = 50; p3 = 0; p4 = 50;}
-    else if(mode == "Top right"){ p1 = 0; p2 = 50; p3 = 50; p4 = 100;}
-    else if(mode == "Bottom left"){ p1 = 50; p2 = 100; p3 = 0; p4 = 50;}
-    else if(mode == "Bottom right"){ p1 = 50; p2 = 100; p3 = 50; p4 = 100;}
+    if(mode == "Fullsize")          { p1 = 0;   p2 = 100;   p3 = 0;     p4 =100;}
+    else if(mode == "Central")      { p1 = 25;  p2 = 75;    p3 = 25;    p4 = 75;}
+    else if(mode == "Top left")     { p1 = 0;   p2 = 50;    p3 = 0;     p4 = 50;}
+    else if(mode == "Top right")    { p1 = 0;   p2 = 50;    p3 = 50;    p4 = 100;}
+    else if(mode == "Bottom left")  { p1 = 50;  p2 = 100;   p3 = 0;     p4 = 50;}
+    else if(mode == "Bottom right") { p1 = 50;  p2 = 100;   p3 = 50;    p4 = 100;}
 }
 
 void MainWindow::updateRowNColAmount(QImage &processingImg){
@@ -444,19 +523,15 @@ void MainWindow::updateRowNColAmount(QImage &processingImg){
     //image, on both axises. Ceil will allow the program to count
     //the exception where the cubes are cut by the edge of the window
     //The program will still replace proper proper image onto these cubes normally
-    setNumRows(ceil(processingImg.width() / (double)cubeW));
+    setNumRows(ceil(processingImg.width()  / (double)cubeW));
     setNumCols(ceil(processingImg.height() / (double)cubeH));
 
     //resize (init the size) the grid vector base on the number of cols and rows above
     grid.resize (rows, vector <PixelCube> (cols));
 }
 
-// exit button to close program during fullscreen mode
-void MainWindow::on_btnExit_clicked()
+
+void MainWindow::on_rdnPose_toggled(bool checked)
 {
-    subDialog->close();
-    this->close();
+    checked == true ? rndPose = true : rndPose = false;
 }
-
-
-
