@@ -82,12 +82,15 @@ void MainWindow::on_btnPixelize_clicked() {
     // duplicate the  image (not yet implemented)
     pixelizedImg = curImg;
 
+    int imgW = pixelizedImg->width();
+    int imgH = pixelizedImg->height();
+
     // update the size of the grid
     updateRowNColAmount(*pixelizedImg);
 
     // loop through every pixels of the image cubewise
-    for(int i = 0; i < pixelizedImg->width(); i += cubeW)
-        for(int j = 0; j < pixelizedImg->height(); j += cubeH){
+    for(int i = 0; i < rows; ++i)
+        for(int j = 0; j < cols; ++j){
 
             int count = 0, r = 0, g = 0, b = 0, a = 0;
 
@@ -97,10 +100,10 @@ void MainWindow::on_btnPixelize_clicked() {
 
                     // stopping criterion in case the last cube
                     // that compute data out of image boundary
-                    if (i+k < pixelizedImg->width() && j+l <pixelizedImg->height()) {
+                    if (i*cubeW+k < imgH && j*cubeH+l < imgW){
 
                         // convert the QRgb to QColor for color extracting process
-                        QColor color(pixelizedImg->pixel(i+k,j+l));
+                        QColor color(pixelizedImg->pixel(j*cubeW+l, i*cubeH+k));
 
                         // extract color channels using QColor built-in functions
                         r += color.red();
@@ -120,23 +123,16 @@ void MainWindow::on_btnPixelize_clicked() {
             QRgb meanColor = qRgba(r,g,b,a);
 
             // var to store size of the cube (for exception case with abnormal size)
-            int cubeWidth = cubeW, cubeHeight = cubeH;
+            int     cubeWidth  = min(cubeW, imgW - i*cubeW),
+                    cubeHeight = min(cubeH, imgH - j*cubeH);
 
             // replace the pixel of the cube by the new color (the same loop above)
             for(int k = 0; k < cubeW; ++k)
                 for(int l = 0; l < cubeH; ++l)
 
                     // same stopping criterion as above
-                    if (i+k < pixelizedImg->width() && j+l <pixelizedImg->height())
-                        pixelizedImg->setPixel(i+k, j+l, meanColor);
-
-                    // calculate width for abnormal cube
-                    else if(i+k < pixelizedImg->width())
-                        cubeWidth = pixelizedImg->width() - i;
-
-                    // calculate height for abnormal cube
-                    else if(j+l <pixelizedImg->height())
-                        cubeHeight = pixelizedImg->height() - j;
+                    if (i*cubeW+k < imgH && j*cubeH+l < imgW)
+                        pixelizedImg->setPixel(j*cubeW+l, i*cubeH+k, meanColor);
 
 
             // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
@@ -146,9 +142,8 @@ void MainWindow::on_btnPixelize_clicked() {
             newcube->setWidth(cubeWidth);
             newcube->setHeight(cubeHeight);
 
-
             // assign the element for the Grid using the "normalized" i and j indexes
-            setPixelCube(i/cubeW, j/cubeH, *newcube);
+            setPixelCube(i, j, *newcube);
 
             // delete the object (prevent memory leak)
             delete newcube;
@@ -190,14 +185,12 @@ void MainWindow::on_btnArt_clicked()
     // opening promt
     textEdit->append("Starting..");
 
-    // clear the previous sample images
+    // clear the previous sample images / mean colors
     if(!imgList.isEmpty()) imgList.clear();
-//    imgList.resize(filePaths.size());
-//    imgList = new QVector< QImage>;
+    if(!sampleColorList.isEmpty()) sampleColorList.clear();
 
     // interfere the process to unfreeze UI due to long processing time
     QApplication::processEvents();
-
 
     // creat the images using the file paths
     // and add every images to a QVector<QImage>
@@ -313,13 +306,14 @@ void MainWindow::on_btnArt_clicked()
 //            textEdit->append("Image random pose processing.. " + QString::number(deg) + " degree rotated");
 
             // painting process
-            cubePainter.drawImage(QRectF(m*cubeW,n*cubeH,cubeW,cubeH),
+            cubePainter.drawImage(QRectF(n*cubeW,m*cubeH,cubeW,cubeH),
                               tempImg,
                               QRectF(0,0,cubeW,cubeH));
 
 //            textEdit->append("-> Pixel cube " + QString::number((m+1)*(cols) + (n+1)) + " sucessfully rendered.");
 
             /* ----------------------- Update Loading bar ----------------------*/
+
             // update counter base on total number of pixel cubes (iterators)
             counter += 100/((double)(rows*cols));
 
@@ -422,8 +416,7 @@ void MainWindow::on_btnSave_clicked()
 // exit button to close program during fullscreen mode
 void MainWindow::on_btnExit_clicked()
 {
-    if(subDialog) subDialog->close();
-    this->close();
+    QCoreApplication::exit();
 }
 
 
@@ -519,14 +512,15 @@ void MainWindow::on_boxMode_activated(const QString &mode)
 
 void MainWindow::updateRowNColAmount(QImage &processingImg){
 
-    //set number of pixel cubes will be constructed using this
-    //image, on both axises. Ceil will allow the program to count
-    //the exception where the cubes are cut by the edge of the window
-    //The program will still replace proper proper image onto these cubes normally
-    setNumRows(ceil(processingImg.width()  / (double)cubeW));
-    setNumCols(ceil(processingImg.height() / (double)cubeH));
+    // set number of pixel cubes will be constructed using this
+    // image, on both axises. If condition on remainder checking of picture
+    // width + cube division will count the rows and cols include the exception
+    // case where the cubes are cut by the edge of the window.
+    setNumRows(ceil(processingImg.height()  / (double)cubeH));
+    setNumCols(ceil(processingImg.width() / (double)cubeW));
 
-    //resize (init the size) the grid vector base on the number of cols and rows above
+    // resize (init the size) the grid vector base on the number of cols and rows above
+    if(!grid.empty()) grid.clear();
     grid.resize (rows, vector <PixelCube> (cols));
 }
 
