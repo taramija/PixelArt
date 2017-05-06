@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void paintEvent(QPaintEvent*);
 
     /* mutators */
     void setPixelCube (const int i, const int j, const PixelCube &cube)  {
@@ -33,6 +34,9 @@ public:
     }
     int getNumRows() const { return rows; }
     int getNumCols() const { return cols; }
+
+    /* resize QHBoxLayout */
+    void resizeLayout();
 
 private slots:
     /* button actions */

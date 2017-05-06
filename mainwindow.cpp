@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // resize QHBoxLayout to center the program
+    resizeLayout();
+
     // ini starting values
     pixmap = NULL;
     pictureViewport = NULL;
@@ -43,6 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::paintEvent(QPaintEvent*e)
+{
+    resizeLayout();
 }
 
 /***************************** LOAD NEW IMAGE ******************************/
@@ -529,3 +537,9 @@ void MainWindow::on_rdnPose_toggled(bool checked)
 {
     checked == true ? rndPose = true : rndPose = false;
 }
+
+void MainWindow::resizeLayout(){
+    ui->horizontalLayout->setGeometry(QRect(0,0,this->width()));
+    ui->verticalLayout->setGeometry(QRect(0,0,this->height()));
+}
+
