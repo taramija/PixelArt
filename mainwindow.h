@@ -19,7 +19,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void paintEvent(QPaintEvent*);
 
     /* mutators */
     void setPixelCube (const int i, const int j, const PixelCube &cube)  {

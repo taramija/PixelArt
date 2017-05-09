@@ -1,5 +1,6 @@
 #include "pixelcube.h"
 #include <QDebug>
+#include <QColor>
 
 PixelCube :: PixelCube() {
 

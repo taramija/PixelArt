@@ -12,9 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // resize QHBoxLayout to center the program
-    resizeLayout();
-
     // ini starting values
     pixmap = NULL;
     pictureViewport = NULL;
@@ -46,11 +43,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::paintEvent(QPaintEvent*e)
-{
-    resizeLayout();
 }
 
 /***************************** LOAD NEW IMAGE ******************************/
@@ -103,12 +95,12 @@ void MainWindow::on_btnPixelize_clicked() {
             int count = 0, r = 0, g = 0, b = 0, a = 0;
 
             // loop through every pixels of the pixel cube
-            for(int k = 0; k < cubeW; ++k)
-                for(int l = 0; l < cubeH; ++l){
+            for(int k = 0; k < cubeH; ++k)
+                for(int l = 0; l < cubeW; ++l){
 
                     // stopping criterion in case the last cube
                     // that compute data out of image boundary
-                    if (i*cubeW+k < imgH && j*cubeH+l < imgW){
+                    if (i*cubeH+k < imgH && j*cubeW+l < imgW){
 
                         // convert the QRgb to QColor for color extracting process
                         QColor color(pixelizedImg->pixel(j*cubeW+l, i*cubeH+k));
@@ -131,15 +123,15 @@ void MainWindow::on_btnPixelize_clicked() {
             QRgb meanColor = qRgba(r,g,b,a);
 
             // var to store size of the cube (for exception case with abnormal size)
-            int     cubeWidth  = min(cubeW, imgW - i*cubeW),
-                    cubeHeight = min(cubeH, imgH - j*cubeH);
+            int     cubeWidth  = min(cubeW, imgW - j*cubeW),
+                    cubeHeight = min(cubeH, imgH - i*cubeH);
 
             // replace the pixel of the cube by the new color (the same loop above)
-            for(int k = 0; k < cubeW; ++k)
-                for(int l = 0; l < cubeH; ++l)
+            for(int k = 0; k < cubeH; ++k)
+                for(int l = 0; l < cubeW; ++l)
 
                     // same stopping criterion as above
-                    if (i*cubeW+k < imgH && j*cubeH+l < imgW)
+                    if (i*cubeH+k < imgH && j*cubeW+l < imgW)
                         pixelizedImg->setPixel(j*cubeW+l, i*cubeH+k, meanColor);
 
 
@@ -510,7 +502,7 @@ void MainWindow::on_boxMode_activated(const QString &mode)
     // I will devide them by 100 by then. this way I can avoid double casting here
     // rather than using 0, 1/4, 1/2, 3/4
 
-    if(mode == "Fullsize")          { p1 = 0;   p2 = 100;   p3 = 0;     p4 =100;}
+    if(mode == "Fullsize")          { p1 = 0;   p2 = 100;   p3 = 0;     p4 = 100;}
     else if(mode == "Central")      { p1 = 25;  p2 = 75;    p3 = 25;    p4 = 75;}
     else if(mode == "Top left")     { p1 = 0;   p2 = 50;    p3 = 0;     p4 = 50;}
     else if(mode == "Top right")    { p1 = 0;   p2 = 50;    p3 = 50;    p4 = 100;}
@@ -524,8 +516,8 @@ void MainWindow::updateRowNColAmount(QImage &processingImg){
     // image, on both axises. If condition on remainder checking of picture
     // width + cube division will count the rows and cols include the exception
     // case where the cubes are cut by the edge of the window.
-    setNumRows(ceil(processingImg.height()  / (double)cubeH));
-    setNumCols(ceil(processingImg.width() / (double)cubeW));
+    setNumRows(ceil(processingImg.height() / (double)cubeH));
+    setNumCols(ceil(processingImg.width()  / (double)cubeW));
 
     // resize (init the size) the grid vector base on the number of cols and rows above
     if(!grid.empty()) grid.clear();
@@ -538,8 +530,4 @@ void MainWindow::on_rdnPose_toggled(bool checked)
     checked == true ? rndPose = true : rndPose = false;
 }
 
-void MainWindow::resizeLayout(){
-    ui->horizontalLayout->setGeometry(QRect(0,0,this->width()));
-    ui->verticalLayout->setGeometry(QRect(0,0,this->height()));
-}
 
