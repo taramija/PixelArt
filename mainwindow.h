@@ -35,22 +35,27 @@ public:
     int getNumCols() const { return cols; }
 
 private slots:
-    /* button actions */
+    /* ui components behaviors */
     void on_btnLoad_clicked();                          // load image
     void on_btnPixelize_clicked();                      // pixelizing
     void on_btnArt_clicked();                           // pixelart
+
+    /* misc. components */
+    void on_inputSizeW_editingFinished();               // cube width input
+    void on_inputSizeH_editingFinished();               // cube height input
+    void on_rdnPose_toggled(bool checked);              // random pose checker
+    void on_btnReset_clicked();                         // reset the original image
     void on_btnSave_clicked();                          // save image
     void on_btnExit_clicked();                          // exit program
 
     /* util functions */
     void updatePixmap(QImage &processingImg);           // update new pixmap
     void updateRowNColAmount(QImage &processingImg);    // update grid size
-    void processDialog();                               // open progress dialog
-    void on_inputSizeW_editingFinished();               // cube width input
-    void on_inputSizeH_editingFinished();               // cube height input
     void on_boxMode_activated(const QString &mode);     // mode dropdown list
+    void processDialog();                               // open progress dialog
+    void updateProgressBar(int size);                   // update progress bar
 
-    void on_rdnPose_toggled(bool checked);
+    void on_sampleKeep_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -66,12 +71,14 @@ private:
 
     QString status;                                     // track user behaviors
     bool rndPose;                                       // track random pose status
+    bool keepSampleImage;                               // track sample images status
 
     /* ui components */
     QGraphicsScene *pictureViewport;
     QDialog *subDialog;
     QTextEdit *textEdit;
     QProgressBar *bar;
+    double progressCounter;
 
     // points to locate region of the sample image to do avg calculation
     // this one change corresponding to combo box "mode" value in the ui
