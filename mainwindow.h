@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDir>
 #include <QGraphicsView>
 #include <QTextEdit>
 #include <QProgressBar>
@@ -54,6 +55,7 @@ private slots:
     void on_boxMode_activated(const QString &mode);     // mode dropdown list
     void processDialog();                               // open progress dialog
     void updateProgressBar(int size);                   // update progress bar
+    void lockButtons(bool lock);                        // lock/unlock the ui buttons
 
     void on_sampleKeep_toggled(bool checked);
 
@@ -66,8 +68,8 @@ private:
     QImage *curImg;                                     // store current img being showed
     QPixmap *pixmap;                                    // store current pixmap
 
-    QString filePath;                                   // path to the selected image
-    QStringList filePaths;                              // list to store multiple selected images
+    QString filePath;                                   // store path to the selected image
+    QDir dir;                                           // store sample images folder
 
     QString status;                                     // track user behaviors
     bool rndPose;                                       // track random pose status
@@ -88,7 +90,7 @@ private:
     int cubeH;                                          // preset pixel cube height
     int cols, rows;                                     // col & row number the image cubewise
 
-    QVector < QImage > imgList;                         // list to store multiple images
+    QVector < QImage* > imgList;                         // list to store multiple images
     QVector < QColor > sampleColorList;                 // list to store color of multiple images
     std :: vector < std :: vector < PixelCube > > grid; // store blocks of pixel
 

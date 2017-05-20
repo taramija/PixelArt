@@ -3,6 +3,7 @@
 #include "pixelcube.h"
 #include <QDebug>
 #include <QFileDialog>
+#include <QDirIterator>
 #include <iostream>
 using namespace std;
 
@@ -12,19 +13,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    /* ------ ini starting values ------- */
+    /* ------------- ini starting values ------------ */
 
     pixmap = NULL;
     pictureViewport = NULL;
     subDialog = NULL;
     textEdit = NULL;
     bar = NULL;
+    dir = NULL;
     rndPose = false;
     keepSampleImage = false;
 
     status = "";
     filePath = QString("");
-    filePaths = QStringList("");
 
     // set size of the pixel region
     cubeW = 5;
@@ -40,7 +41,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // set default processing regions (full size)
     p1 = 0; p2 = 100; p3 = 0; p4 = 100;
 
-    /* ----------------------------------- */
+    /* --------------- show about page ---------------- */
+
+    QImage *aboutPage = new QImage();
+
+    aboutPage->load("D://CProject/PixelArt/extras/about.jpg");
+
+    aboutPage->scaled(496,470);
+
+    ui->aboutLabel->setPixmap(QPixmap::fromImage(*aboutPage));
 
 }
 
@@ -63,6 +72,9 @@ void MainWindow::on_btnLoad_clicked(){
 
     if (filePath.isEmpty()) return;
 
+    // hide about page upon new image loading
+    ui->aboutLabel->hide();
+
     img = new QImage(filePath);
 
     // update status to track user behavior
@@ -75,6 +87,28 @@ void MainWindow::on_btnLoad_clicked(){
 /***************************** PIXELIZE IMAGE ******************************/
 
 void MainWindow::on_btnPixelize_clicked() {
+
+    // cube sizes validators
+    // abort the function if cubesize got 0 in values and highlight the cube size selectors
+    if(cubeW == 0 || cubeH == 0){   // we don't care about negative cases since QSpinBox takes only positive numbers
+
+        if(cubeW == 0){
+            ui->inputSizeW->setStyleSheet("QSpinBox { color : red; }");
+            ui->inputSizeH->setStyleSheet("QSpinBox { color : black; }");
+        }
+
+        if(cubeH == 0){
+            ui->inputSizeH->setStyleSheet("QSpinBox { color : red; }");
+            ui->inputSizeW->setStyleSheet("QSpinBox { color : black; }");
+        }
+
+        return;
+    }else{
+        // unhighlight the selectors if the sizes were valid
+        ui->inputSizeW->setStyleSheet("QSpinBox { color : black; }");
+        ui->inputSizeH->setStyleSheet("QSpinBox { color : black; }");
+    }
+
 
     // close the dialog
     if(subDialog) subDialog->close();
@@ -164,8 +198,12 @@ void MainWindow::on_btnPixelize_clicked() {
 
 void MainWindow::on_btnArt_clicked(){
 
+    // lock this button until the function ended
+    lockButtons(true);
+
     // close the dialog
     if(subDialog) subDialog->close();
+
 
     /* ----------------------- Multiple files Selection ----------------------*/
 
@@ -174,13 +212,19 @@ void MainWindow::on_btnArt_clicked(){
 
         // open multiple files, the user select a set of images
         // that he wants to be involed in pixelart process
-        filePaths = QFileDialog::getOpenFileNames(
+        QString dirPath = QFileDialog::getExistingDirectory(
                     this,
                     "Select sample images",
                     "d:\\CProject/PixelArt",
-                    "Images (*.png *.jpg *.jpeg)");
+                    QFileDialog::ShowDirsOnly);
 
-        if(filePaths.isEmpty()) return;
+
+        // escape the function if the user did not select any file
+        if(dirPath.isEmpty()) {
+            // unlock the button on this case
+            lockButtons(false);
+            return;
+        }
 
         // open processing dialog to display progress
         processDialog();
@@ -189,6 +233,15 @@ void MainWindow::on_btnArt_clicked(){
         textEdit->append("Started.");
         textEdit->append("Loading sample images..");
 
+        // create QDir using path extracted from QFileDialog
+        dir.setPath(dirPath);
+
+        // filter the files inside this QDir
+        dir.setNameFilters(QStringList()<<"*.jpg" <<"*.png");
+
+        // extract relative path of all images inside QDir
+        QStringList relativePaths = dir.entryList();
+
         // clear the previous sample images / mean colors
         if(!imgList.isEmpty()) imgList.clear();
         if(!sampleColorList.isEmpty()) sampleColorList.clear();
@@ -196,15 +249,20 @@ void MainWindow::on_btnArt_clicked(){
         // iterator counter (in percentage) to track progress
         progressCounter = 0;
 
-        // creat the images using the file paths
-        // and add every images to a QVector<QImage>
-        for (int i =0; i < filePaths.size(); i++){
-            QImage *image = new QImage(filePaths.at(i));
-            imgList.append(*image);
-            delete image;
+        // create the images using the file paths
+        // and add every images to a QVector<QImage> imgList
+        for (int i =0; i < relativePaths.size(); i++){
+
+            // convert relative paths to absolute path to use it to create QImage
+            QString absImgPath = dir.absoluteFilePath(relativePaths[i]);
+            QImage *image = new QImage(absImgPath);
+
+            imgList.append(image);
+
+            //delete image;   // delete the instance to free memory
 
             // update progress bar value
-            updateProgressBar(filePaths.size());
+            updateProgressBar(dir.count());
 
             // interfere the process to unfreeze UI due to long processing time
             QApplication::processEvents();
@@ -217,7 +275,7 @@ void MainWindow::on_btnArt_clicked(){
         textEdit->append("Processing sample images..");
 
         // declare iteratior (for the loop)
-        QVector<QImage>::iterator sampleImage;
+        QVector<QImage*>::iterator sampleImage;
 
         // reset progress bar counter variable
         progressCounter = 0;
@@ -230,10 +288,10 @@ void MainWindow::on_btnArt_clicked(){
             // set the marks point (to define the region in the sample
             // image that will be processed to compute the mean) based
             // on the width and height of the image
-            int mark1 = sampleImage->width()*p1/100;
-            int mark2 = sampleImage->width()*p2/100;
-            int mark3 = sampleImage->height()*p3/100;
-            int mark4 = sampleImage->height()*p4/100;
+            int mark1 = (*sampleImage)->width()*p1/100;
+            int mark2 = (*sampleImage)->width()*p2/100;
+            int mark3 = (*sampleImage)->height()*p3/100;
+            int mark4 = (*sampleImage)->height()*p4/100;
 
             // find the most representative color from images
             // as what happened in pixelizing image function
@@ -241,7 +299,7 @@ void MainWindow::on_btnArt_clicked(){
                 for(int n = mark3; n < mark4; ++n){
 
                     // convert the QRgb to QColor for color extracting process
-                    QColor color(sampleImage->pixel(m,n));
+                    QColor color((*sampleImage)->pixel(m,n));
 
                     // extract color channels using QColor built-in functions
                     red += color.red();
@@ -260,18 +318,19 @@ void MainWindow::on_btnArt_clicked(){
             sampleColorList.append(QColor::fromRgba(qRgba(red,green, blue,alpha)));
 
             // update progress bar value
-            updateProgressBar(filePaths.size());
+            updateProgressBar(dir.count());
 
             // interfere the process to unfreeze UI due to long processing time
             QApplication::processEvents();
+
         }
 
         textEdit->append(" -> Sample images info extracted!");
 
         // resize vectors to adapt new datas, the program will crash
         // without resizing these dynamic variables on the second attempt
-        imgList.resize(filePaths.length());
-        sampleColorList.resize(filePaths.length());
+        imgList.resize(dir.count());
+        sampleColorList.resize(dir.count());
 
     } else processDialog();
 
@@ -311,7 +370,7 @@ void MainWindow::on_btnArt_clicked(){
             // (it's also the index of best match image in the sample
             // image list) of this cube so that we can get the best
             // matched image in sample image list using this index
-            QImage tempImg = imgList[(*cube).findBestMatchedIndex(sampleColorList)];
+            QImage *tempImg = imgList[(*cube).findBestMatchedIndex(sampleColorList)];
 
             // rotate image randomly to prevent resemble image poses
             // will be pixelated in same color area of the original picture
@@ -319,16 +378,25 @@ void MainWindow::on_btnArt_clicked(){
                 QMatrix rm;
                 int deg = (rand() % 4)*90;
                 rm.rotate(deg);                     // random between 0, 1pi, 2pi, 3pi
-                tempImg = tempImg.transformed(rm);  // rotate img
+                *tempImg = tempImg->transformed(rm);  // rotate img
             }
 
             // scale image to fit cube size before start drawing
-            tempImg = tempImg.scaled(cubeW, cubeH);
+            if( tempImg->width()/cubeW <  tempImg->height()/cubeH )
+                *tempImg = tempImg->scaledToWidth(cubeW);
+
+            else if( tempImg->width()/cubeW >  tempImg->height()/cubeH )
+                *tempImg = tempImg->scaledToHeight(cubeH);
+
+            else
+                *tempImg = tempImg->scaled(cubeW,cubeH);
 
             // painting process
             cubePainter.drawImage(QRectF(n*cubeW,m*cubeH,cubeW,cubeH),
-                              tempImg,
-                              QRectF(0,0,cubeW,cubeH));
+                              *tempImg,
+                                  // with this coordinator for source image, painter could be able
+                                  // to take the center region of the image that will be processed
+                              QRectF(tempImg->width()/2-cubeW/2, tempImg->height()/2-cubeH/2, cubeW, cubeH));
 
             // update progress bar value
             updateProgressBar(rows*cols);
@@ -395,7 +463,7 @@ void MainWindow::on_btnArt_clicked(){
     textEdit->append("... \nfinalizing.. ");
     textEdit->append( QString::number(artedImg.width()) + "x" +
                       QString::number(artedImg.height()) + " dimension image.");
-    textEdit->append( QString::number(filePaths.size()) + " sample images have been used.");
+    textEdit->append( QString::number(dir.count()) + " sample images have been used.");
     textEdit->append( QString::number(rows*cols) + " pixel cubes have been transformed.");
 
     // create new pixmap using this big combination image
@@ -404,6 +472,9 @@ void MainWindow::on_btnArt_clicked(){
     // update processing dialog title
     subDialog->setWindowTitle("Done!");
     textEdit->append("Done!");
+
+    // re-enable the buttons
+    lockButtons(false);
 
 }
 
@@ -563,4 +634,16 @@ void MainWindow::updateProgressBar(int size){
 // keep loaded sample images for next processing
 void MainWindow::on_sampleKeep_toggled(bool checked){
     checked == true ? keepSampleImage = true : keepSampleImage = false;
+}
+
+// lock the ui buttons
+void MainWindow::lockButtons(bool lock){
+
+    // invert bool value since setEnabled function
+    // has the opposite logic with lock parameter
+    ui->btnLoad->setEnabled(!lock);
+    ui->btnReset->setEnabled(!lock);
+    ui->btnPixelize->setEnabled(!lock);
+    ui->btnArt->setEnabled(!lock);
+    ui->btnSave->setEnabled(!lock);
 }
