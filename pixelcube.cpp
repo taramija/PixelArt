@@ -13,11 +13,12 @@ PixelCube :: ~PixelCube() {
 
 int PixelCube::findBestMatchedIndex(QVector<QColor> sampleColors){
 
-    // the shortest difference amount of color channels with 255*4 as ini value
-    // (255 is maximum color value of a channel) 4 is the total of channels
+    // this is a temp variable to store the current shortest distance
+    // between the color of the cube and color of sample images. This takes
+    // 255*4 as ini value since 255*4 is the maximum color value of 4 channels
     int currentDiff = 255*4;
 
-    // the image that close to match with the cube color
+    // the index of the color that most close to the color of the cube
     int currentBestMatchedIndex;
 
     // declare iteratior (for the loop)
@@ -29,7 +30,7 @@ int PixelCube::findBestMatchedIndex(QVector<QColor> sampleColors){
         int meanR = 0, meanG = 0, meanB = 0, meanA = 0, totalDiff = 0;
 
         // calculate the difference on all 4 channels
-        // by comparing them with the these 4 values of the cube
+        // by comparing them with these 4 values of the cube
         meanR = abs(r - it->red());
         meanG = abs(g - it->green());
         meanB = abs(b - it->blue());
@@ -48,11 +49,9 @@ int PixelCube::findBestMatchedIndex(QVector<QColor> sampleColors){
 
     }
 
-    // after searching the whole list of sample color set the best matched index
+    // after searching the whole list of sample color set we find the best matched index
     // (it's also be the index of the best matched image) as an attribue of the cube
-    bestMatchIndex = currentBestMatchedIndex;
-
-    // I like to return it too, so it will be convenient using it in action
+    // I prefer to return it rather than store it, so it will be convenient using it in action
     return currentBestMatchedIndex;
 
 }

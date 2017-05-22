@@ -1,0 +1,968 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.5.7)  22 MAY 2017 14:53
+entering extended mode
+**./ProjectReport.tex
+(ProjectReport.tex
+LaTeX2e <2016/03/31> patch level 3
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) ("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\fontenc.sty
+"
+Package: fontenc 2016/06/19 v1.99m Standard LaTeX package
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\t1enc.def"
+File: t1enc.def 2016/06/19 v1.99m Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\pslatex\pslatex.st
+y"
+Package: pslatex 1996/07/24 v1.2 pslatex emulation (DPC)
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptmcm/m/n on input line 65.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ptmcm/m/it on input line 66.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/pzccm/m/n on input line 67.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/psycm/m/n on input line 68.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 74.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 75.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 75.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\inputenc.sty"
+Package: inputenc 2015/03/17 v1.2c Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\latin9.def"
+File: latin9.def 2015/03/17 v1.2c Input encoding file
+))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.
+sty"
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\keyval.st
+y"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.s
+ty"
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.
+sty"
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.
+sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count87
+\Gm@cntv=\count88
+\c@Gm@tempcnt=\count89
+\Gm@bindingoffset=\dimen103
+\Gm@wd@mp=\dimen104
+\Gm@odd@mp=\dimen105
+\Gm@even@mp=\dimen106
+\Gm@layoutwidth=\dimen107
+\Gm@layoutheight=\dimen108
+\Gm@layouthoffset=\dimen109
+\Gm@layoutvoffset=\dimen110
+\Gm@dimlist=\toks17
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\geometry\geometry.
+cfg"))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\textcomp.sty"
+Package: textcomp 2016/06/19 v1.99m Standard LaTeX package
+Package textcomp Info: Sub-encoding information:
+(textcomp)               5 = only ISO-Adobe without \textcurrency
+(textcomp)               4 = 5 + \texteuro
+(textcomp)               3 = 4 + \textohm
+(textcomp)               2 = 3 + \textestimated + \textcurrency
+(textcomp)               1 = TS1 - \textcircled - \t
+(textcomp)               0 = TS1 (full)
+(textcomp)             Font families with sub-encoding setting implement
+(textcomp)             only a restricted character set as indicated.
+(textcomp)             Family '?' is the default used for unknown fonts.
+(textcomp)             See the documentation for details.
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1enc.def"
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+)
+LaTeX Info: Redefining \oldstylenums on input line 334.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
+
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
+Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amssymb.s
+ty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.
+sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks18
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsmath.st
+y"
+Package: amsmath 2016/06/28 v2.15d AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amstext.st
+y"
+Package: amstext 2000/06/29 v2.01 AMS text
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
+"
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks19
+\ex@=\dimen111
+))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
+"
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen112
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
+"
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count90
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count91
+\leftroot@=\count92
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count93
+\DOTSCASE@=\count94
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen113
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
+\macc@depth=\count95
+\c@MaxMatrixCols=\count96
+\dotsspace@=\muskip10
+\c@parentequation=\count97
+\dspbrk@lvl=\count98
+\tag@help=\toks20
+\row@=\count99
+\column@=\count100
+\maxfields@=\count101
+\andhelp@=\toks21
+\eqnshift@=\dimen114
+\alignsep@=\dimen115
+\tagshift@=\dimen116
+\tagwidth@=\dimen117
+\totwidth@=\dimen118
+\lineht@=\dimen119
+\@envbody=\toks22
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks23
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\stmaryrd\stmaryrd.
+sty"
+Package: stmaryrd 1994/03/03 St Mary's Road symbol package
+\symstmry=\mathgroup8
+LaTeX Font Info:    Overwriting symbol font `stmry' in version `bold'
+(Font)                  U/stmry/m/n --> U/stmry/b/n on input line 89.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.sty"
+Package: babel 2016/04/23 3.9r The Babel package
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\babel-english\engl
+ish.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2016/04/23 3.9r Babel common definitions
+\babel@savecnt=\count102
+\U@D=\dimen120
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+))
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.
+sty"
+\lst@mode=\count103
+\lst@gtempboxa=\box28
+\lst@token=\toks24
+\lst@length=\count104
+\lst@currlwidth=\dimen121
+\lst@column=\count105
+\lst@pos=\count106
+\lst@lostspace=\dimen122
+\lst@width=\dimen123
+\lst@newlines=\count107
+\lst@lineno=\count108
+\lst@maxwidth=\dimen124
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.s
+ty"
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+\c@lstnumber=\count109
+\lst@skipnumbers=\count110
+\lst@framebox=\box29
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\listings.
+cfg"
+File: listings.cfg 2015/06/04 1.6 listings configuration
+))
+Package: listings 2015/06/04 1.6 (Carsten Heinz)
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphicx.
+sty"
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\graphics.
+sty"
+Package: graphics 2016/07/10 v1.0t Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\graph
+ics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-def\pdfte
+x.def"
+File: pdftex.def 2016/07/10 v0.06j Graphics/color for pdfTeX
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\infware
+rr.sty"
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds
+.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count111
+))
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\float\float.sty"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count112
+\float@exts=\toks25
+\float@box=\box30
+\@float@everytoks=\toks26
+\@floatcapt=\box31
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\lastpage\lastpage.
+sty"
+Package: lastpage 2015/03/29 v1.2m Refers to last page's name (HMM; JPG)
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hyperref.
+sty"
+Package: hyperref 2016/06/24 v6.83q Hypertext links for LaTeX
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
+hyperref.sty"
+Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\hobsub-
+generic.sty"
+Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+Package hobsub Info: Skipping package `ifvtex' (already loaded).
+Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
+Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+Package: pdftexcmds 2016/05/21 v0.22 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+)
+Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
+Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+)
+Package hobsub Info: Skipping package `hobsub' (already loaded).
+Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+Package: xcolor-patch 2016/05/16 xcolor patch
+Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
+Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
+Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\auxhook.s
+ty"
+Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\kvoptions
+.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+\@linkdim=\dimen127
+\Hy@linkcounter=\count113
+\Hy@pagecounter=\count114
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\pd1enc.de
+f"
+File: pd1enc.def 2016/06/24 v6.83q Hyperref: PDFDocEncoding definition (HO)
+)
+\Hy@SavedSpaceFactor=\count115
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\00miktex\hyperref.
+cfg"
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Hyper figures OFF on input line 4486.
+Package hyperref Info: Link nesting OFF on input line 4491.
+Package hyperref Info: Hyper index ON on input line 4494.
+Package hyperref Info: Plain pages OFF on input line 4501.
+Package hyperref Info: Backreferencing OFF on input line 4506.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4735.
+\c@Hy@tempcnt=\count116
+ ("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\url\url.sty"
+\Urlmuskip=\muskip11
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5088.
+\XeTeXLinkMargin=\dimen128
+\Fld@menulength=\count117
+\Field@Width=\dimen129
+\Fld@charsize=\dimen130
+Package hyperref Info: Hyper figures OFF on input line 6342.
+Package hyperref Info: Link nesting OFF on input line 6347.
+Package hyperref Info: Hyper index ON on input line 6350.
+Package hyperref Info: backreferencing OFF on input line 6357.
+Package hyperref Info: Link coloring OFF on input line 6362.
+Package hyperref Info: Link coloring with OCG OFF on input line 6367.
+Package hyperref Info: PDF/A mode OFF on input line 6372.
+LaTeX Info: Redefining \ref on input line 6412.
+LaTeX Info: Redefining \pageref on input line 6416.
+\Hy@abspage=\count118
+\c@Item=\count119
+\c@Hfootnote=\count120
+)
+
+Package hyperref Message: Driver (autodetected): hpdftex.
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\hpdftex.d
+ef"
+File: hpdftex.def 2016/06/24 v6.83q Hyperref driver for pdfTeX
+\Fld@listcount=\count121
+\c@bookmark@seq@number=\count122
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\rerunfile
+check.sty"
+Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
+)
+\Hy@SectionHShift=\skip46
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\breakurl\breakurl.
+sty"
+Package: breakurl 2013/04/10 v1.40 Breakable hyperref URLs
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\xkeyval\xkeyval.st
+y"
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\xkeyval\xkeyval.
+tex"
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\xkeyval\xkvutils
+.tex"
+\XKV@toks=\toks27
+\XKV@tempa@toks=\toks28
+)
+\XKV@depth=\count123
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+
+Package breakurl Warning: You are using breakurl while processing via pdflatex.
+
+(breakurl)                \burl will be just a synonym of \url.
+(breakurl)                 on input line 48.
+
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.
+sty"
+Package: fancyhdr 2016/09/06 3.8 Extensive control of page headers and footers
+\fancy@headwidth=\skip47
+\f@ncyO@elh=\skip48
+\f@ncyO@erh=\skip49
+\f@ncyO@olh=\skip50
+\f@ncyO@orh=\skip51
+\f@ncyO@elf=\skip52
+\f@ncyO@erf=\skip53
+\f@ncyO@olf=\skip54
+\f@ncyO@orf=\skip55
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics\color.sty
+"
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\graphics-cfg\color
+.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.
+sty"
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.
+sty"
+File: lstlang1.sty 2015/06/04 1.6 listings language file
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstmisc.s
+ty"
+File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
+) (ProjectReport.aux)
+\openout1 = `ProjectReport.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OMS/pzccm/m/n on input line 120.
+LaTeX Font Info:    Try loading font information for OMS+pzccm on input line 12
+0.
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omspzccm.fd
+"
+File: omspzccm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/pzccm.
+)
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 120.
+
+ ("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
+LaTeX Font Info:    ... okay on input line 120.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=455.24411pt
+* \textheight=702.78308pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-38.1381pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+\c@lstlisting=\count124
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf.mk
+ii"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count125
+\scratchdimen=\dimen131
+\scratchbox=\box32
+\nofMPsegments=\count126
+\nofMParguments=\count127
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count128
+\MPscratchDim=\dimen132
+\MPnumerator=\count129
+\makeMPintoPDFobject=\count130
+\everyMPtoPDFconversion=\toks30
+)
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-
+base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\grfext.st
+y"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+Package lastpage Info: Please have a look at the pageslts package at
+(lastpage)             https://www.ctan.org/pkg/pageslts
+(lastpage)             ! on input line 120.
+\AtBeginShipoutBox=\box33
+Package hyperref Info: Link coloring OFF on input line 120.
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\hyperref\nameref.s
+ty"
+Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\generic\oberdiek\gettitl
+estring.sty"
+Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+)
+\c@section@level=\count131
+)
+LaTeX Info: Redefining \ref on input line 120.
+LaTeX Info: Redefining \pageref on input line 120.
+LaTeX Info: Redefining \nameref on input line 120.
+ (ProjectReport.out) (ProjectReport.out)
+\@outlinefile=\write3
+\openout3 = `ProjectReport.out'.
+
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 123.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 132.
+
+<img/about.JPG, id=131, 119.4864pt x 113.223pt>
+File: img/about.JPG Graphic file (type jpg)
+ <use img/about.JPG>
+Package pdftex.def Info: img/about.JPG used on input line 134.
+(pdftex.def)             Requested size: 426.8525pt x 369.89842pt.
+ [1
+
+{C:/Users/Anger/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./img/about
+.JPG>]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 138.
+
+(ProjectReport.toc
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
+LaTeX Font Info:    Try loading font information for OT1+ptmcm on input line 3.
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ot1ptmcm.fd
+"
+File: ot1ptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OML+ptmcm on input line 3.
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omlptmcm.fd
+"
+File: omlptmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ptmcm.
+)
+LaTeX Font Info:    Try loading font information for OMX+psycm on input line 3.
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\omxpsycm.fd
+"
+File: omxpsycm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/psycm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Try loading font information for U+msa on input line 3.
+ ("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 3.
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for U+stmry on input line 3.
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\stmaryrd\ustmry.fd
+"))
+\tf@toc=\write4
+\openout4 = `ProjectReport.toc'.
+
+ [2]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 149.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 152.
+
+
+("C:\Users\Anger\AppData\Local\Programs\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [3] [4] [5] <img/pointer.png, id=269, 374.39874pt x 298.11375pt>
+File: img/pointer.png Graphic file (type png)
+
+<use img/pointer.png>
+Package pdftex.def Info: img/pointer.png used on input line 336.
+(pdftex.def)             Requested size: 227.6231pt x 170.7181pt.
+ [6 <./img/pointer.png>] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 420--421
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 533--535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--540
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 573--575
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 611--612
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 613--615
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 638--641
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 638--641
+
+ []
+
+<img/model.jpg, id=427, 1160.335pt x 491.8375pt>
+File: img/model.jpg Graphic file (type jpg)
+ <use img/model.jpg>
+Package pdftex.def Info: img/model.jpg used on input line 683.
+(pdftex.def)             Requested size: 455.23773pt x 199.17058pt.
+ [11]
+Underfull \hbox (badness 10000) in paragraph at lines 687--688
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 709--712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 709--712
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 713--714
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 715--716
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 717--718
+
+ []
+
+[12 <./img/model.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 765--766
+
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 802--803
+
+ []
+
+[14] <img/cubesize.jpg, id=605, 161.85469pt x 31.61812pt>
+File: img/cubesize.jpg Graphic file (type jpg)
+
+<use img/cubesize.jpg>
+Package pdftex.def Info: img/cubesize.jpg used on input line 874.
+(pdftex.def)             Requested size: 113.81119pt x 28.45313pt.
+ <img/validator.jpg, id=606, 156.585pt x 28.60687pt>
+File: img/validator.jpg Graphic file (type jpg)
+
+<use img/validator.jpg>
+Package pdftex.def Info: img/validator.jpg used on input line 890.
+(pdftex.def)             Requested size: 113.81389pt x 28.45401pt.
+ [15 <./img/cubesize.jpg> <./img/validator.jpg>]
+<img/about.jpg, id=647, 119.4864pt x 113.223pt>
+File: img/about.jpg Graphic file (type jpg)
+ <use img/about.jpg>
+Package pdftex.def Info: img/about.jpg used on input line 951.
+(pdftex.def)             Requested size: 170.71838pt x 170.72208pt.
+ [16 <./img/about.jpg>] [17]
+Underfull \hbox (badness 10000) in paragraph at lines 1081--1082
+
+ []
+
+<img/dialog.jpg, id=728, 269.50688pt x 175.40532pt>
+File: img/dialog.jpg Graphic file (type jpg)
+ <use img/dialog.jpg>
+Package pdftex.def Info: img/dialog.jpg used on input line 1086.
+(pdftex.def)             Requested size: 256.07942pt x 170.72908pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1091--1092
+
+ []
+
+[18 <./img/dialog.jpg>] [19] <img/mode.jpg, id=820, 91.09032pt x 103.13531pt>
+File: img/mode.jpg Graphic file (type jpg)
+
+<use img/mode.jpg>
+Package pdftex.def Info: img/mode.jpg used on input line 1182.
+(pdftex.def)             Requested size: 85.3608pt x 113.8127pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1185--1186
+
+ []
+
+<img/mode_explain.jpg, id=821, 139.52126pt x 66.2475pt>
+File: img/mode_explain.jpg Graphic file (type jpg)
+
+<use img/mode_explain.jpg>
+Package pdftex.def Info: img/mode_explain.jpg used on input line 1189.
+(pdftex.def)             Requested size: 227.63051pt x 113.81912pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1193--1194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1195--1196
+
+ []
+
+<img/mode_demo.jpg, id=822, 1742.00812pt x 1105.12875pt>
+File: img/mode_demo.jpg Graphic file (type jpg)
+
+<use img/mode_demo.jpg>
+Package pdftex.def Info: img/mode_demo.jpg used on input line 1200.
+(pdftex.def)             Requested size: 455.22397pt x 284.52747pt.
+ [20 <./img/mode.jpg> <./img/mode_explain.jpg>] [21 <./img/mode_demo.jpg>] <img
+/random_ui.jpg, id=869, 97.86563pt x 29.35968pt>
+File: img/random_ui.jpg Graphic file (type jpg)
+
+<use img/random_ui.jpg>
+Package pdftex.def Info: img/random_ui.jpg used on input line 1250.
+(pdftex.def)             Requested size: 85.3634pt x 28.45285pt.
+ <img/random.jpg, id=870, 112.92188pt x 112.92188pt>
+File: img/random.jpg Graphic file (type jpg)
+
+<use img/random.jpg>
+Package pdftex.def Info: img/random.jpg used on input line 1255.
+(pdftex.def)             Requested size: 142.28229pt x 142.28229pt.
+ [22 <./img/random_ui.jpg> <./img/random.jpg>]
+<img/watermark.jpg, id=902, 479.54156pt x 143.78719pt>
+File: img/watermark.jpg Graphic file (type jpg)
+ <use img/watermark.jpg>
+Package pdftex.def Info: img/watermark.jpg used on input line 1341.
+(pdftex.def)             Requested size: 284.52954pt x 85.36026pt.
+
+[23 <./img/watermark.jpg>] [24]
+Underfull \hbox (badness 10000) in paragraph at lines 1396--1397
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1398--1399
+
+ []
+
+
+AED: lastpage setting LastPage
+[25]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1450.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1450.
+ (ProjectReport.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1450.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1450.
+
+Package rerunfilecheck Info: File `ProjectReport.out' has not changed.
+(rerunfilecheck)             Checksum: 462699ED514D3B0C983504009D93D313;2371.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1450.
+ )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 126 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 11466 strings out of 493333
+ 164263 string characters out of 3130144
+ 511708 words of memory out of 3000000
+ 14048 multiletter control sequences out of 15000+200000
+ 47127 words of font info for 68 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 46i,12n,97p,436b,2187s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/Anger/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvi
+ps/base/8r.enc}<C:/Users/Anger/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/ur
+w/courier/ucrr8a.pfb><C:/Users/Anger/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/urw/times/utmb8a.pfb><C:/Users/Anger/AppData/Local/Programs/MiKTeX 2.9/font
+s/type1/urw/times/utmr8a.pfb><C:/Users/Anger/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/urw/times/utmri8a.pfb>
+Output written on ProjectReport.pdf (25 pages, 6314244 bytes).
+PDF statistics:
+ 1169 PDF objects out of 1200 (max. 8388607)
+ 748 named destinations out of 1000 (max. 500000)
+ 322 words of extra memory for PDF output out of 10000 (max. 10000000)
+

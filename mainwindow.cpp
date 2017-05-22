@@ -81,7 +81,7 @@ void MainWindow::on_btnLoad_clicked(){
     status = "loaded";
 
     // create new pixmap using this loaded image
-    updatePixmap(*img);
+    updateViewport(*img);
 }
 
 /***************************** PIXELIZE IMAGE ******************************/
@@ -169,14 +169,15 @@ void MainWindow::on_btnPixelize_clicked() {
                         pixelizedImg->setPixel(j*cubeW+l, i*cubeH+k, meanColor);
 
 
-            // add this block of pixel as a PixelCube in the grid of mainwindow for PixelArt function
+            // transform this block of pixel as an instance of PixelCube for PixelArt function
             PixelCube *newcube = new PixelCube(r,g,b,a);
 
             // set width height for this cube
             newcube->setWidth(cubeWidth);
             newcube->setHeight(cubeHeight);
 
-            // assign the element for the Grid using the "normalized" i and j indexes
+            // store this PixelCube on the 2 dimensions vector (Grid) of
+            // mainWindow using the "normalized" i and j indexes
             setPixelCube(i, j, *newcube);
 
             // delete the object (prevent memory leak)
@@ -190,7 +191,7 @@ void MainWindow::on_btnPixelize_clicked() {
     status = "pixelized";
 
     // create new pixmap using this new image
-    updatePixmap(*pixelizedImg);
+    updateViewport(*pixelizedImg);
 
 }
 
@@ -198,7 +199,7 @@ void MainWindow::on_btnPixelize_clicked() {
 
 void MainWindow::on_btnArt_clicked(){
 
-    // lock this button until the function ended
+    // lock the buttons until the function ended
     lockButtons(true);
 
     // close the dialog
@@ -249,8 +250,7 @@ void MainWindow::on_btnArt_clicked(){
         // iterator counter (in percentage) to track progress
         progressCounter = 0;
 
-        // create the images using the file paths
-        // and add every images to a QVector<QImage> imgList
+        // create the images using the file paths and add them to vector imgList
         for (int i =0; i < relativePaths.size(); i++){
 
             // convert relative paths to absolute path to use it to create QImage
@@ -259,7 +259,7 @@ void MainWindow::on_btnArt_clicked(){
 
             imgList.append(image);
 
-            //delete image;   // delete the instance to free memory
+            //delete image;   // delete the dynamical instance to free memory
 
             // update progress bar value
             updateProgressBar(dir.count());
@@ -343,14 +343,14 @@ void MainWindow::on_btnArt_clicked(){
     std :: vector < std :: vector < PixelCube > >::iterator cubeRow;
     std :: vector < PixelCube >::iterator cube;
 
-    // use painter to join (by painting) this cube (image) into a big blank
-    // image in order to have a big combination image after processing
+    // create a painter to join (by painting) best matched image on a big
+    // canvas in order to have a big combination image after processing
     QPainter cubePainter;
 
-    // duplicate new image from pixelized image
+    // duplicate new image from pixelized image then use it as a canvas
     artedImg = *pixelizedImg;
 
-    // choose image to paint in
+    // choose the canvas to paint in
     cubePainter.begin(&artedImg);
 
     // index var for row vector loop (I can't find any proper way)
@@ -359,6 +359,7 @@ void MainWindow::on_btnArt_clicked(){
     // reset progress bar counter variable
     progressCounter = 0;
 
+    // loop through the grid (matrix of PixelCube)
     for (cubeRow = grid.begin(); cubeRow != grid.end(); ++cubeRow){
 
         // index var for col vector loop
@@ -366,37 +367,37 @@ void MainWindow::on_btnArt_clicked(){
 
         for (cube = cubeRow->begin(); cube != cubeRow->end(); ++cube){
 
-            // passin the sample image mean list to find the bestMatchIndex
+            // passin the sample image color list to find the bestMatchIndex
             // (it's also the index of best match image in the sample
             // image list) of this cube so that we can get the best
             // matched image in sample image list using this index
-            QImage *tempImg = imgList[(*cube).findBestMatchedIndex(sampleColorList)];
+            QImage *bestImg = imgList[(*cube).findBestMatchedIndex(sampleColorList)];
 
             // rotate image randomly to prevent resemble image poses
             // will be pixelated in same color area of the original picture
             if(rndPose){
                 QMatrix rm;
-                int deg = (rand() % 4)*90;
-                rm.rotate(deg);                     // random between 0, 1pi, 2pi, 3pi
-                *tempImg = tempImg->transformed(rm);  // rotate img
+                int deg = (rand() % 4)*90;              // random between 0, 1pi, 2pi, 3pi
+                rm.rotate(deg);
+                *bestImg = bestImg->transformed(rm);    // rotate img using QMatrix
             }
 
             // scale image to fit cube size before start drawing
-            if( tempImg->width()/cubeW <  tempImg->height()/cubeH )
-                *tempImg = tempImg->scaledToWidth(cubeW);
+            if( bestImg->width()/cubeW <  bestImg->height()/cubeH )
+                *bestImg = bestImg->scaledToWidth(cubeW);
 
-            else if( tempImg->width()/cubeW >  tempImg->height()/cubeH )
-                *tempImg = tempImg->scaledToHeight(cubeH);
+            else if( bestImg->width()/cubeW >  bestImg->height()/cubeH )
+                *bestImg = bestImg->scaledToHeight(cubeH);
 
             else
-                *tempImg = tempImg->scaled(cubeW,cubeH);
+                *bestImg = bestImg->scaled(cubeW,cubeH);
 
             // painting process
             cubePainter.drawImage(QRectF(n*cubeW,m*cubeH,cubeW,cubeH),
-                              *tempImg,
+                              *bestImg,
                                   // with this coordinator for source image, painter could be able
                                   // to take the center region of the image that will be processed
-                              QRectF(tempImg->width()/2-cubeW/2, tempImg->height()/2-cubeH/2, cubeW, cubeH));
+                              QRectF(bestImg->width()/2-cubeW/2, bestImg->height()/2-cubeH/2, cubeW, cubeH));
 
             // update progress bar value
             updateProgressBar(rows*cols);
@@ -443,7 +444,7 @@ void MainWindow::on_btnArt_clicked(){
     else
         watermark->load("D://CProject/PixelArt/extras/wtm_b.png");   // load black watermark
 
-
+    // paint watermark onto the image
     cubePainter.drawImage(  QRectF(wtmPosX, wtmPosY, wtmWidth, wtmHeight),
                             watermark->scaled(wtmWidth,wtmHeight),
                             QRectF(0,0,wtmWidth,wtmHeight)                  );
@@ -453,7 +454,7 @@ void MainWindow::on_btnArt_clicked(){
 
     /* --------------------- Ending Process / Paint final image --------------------*/
 
-    // end painting (joint process)
+    // end painting (close the canvas)
     cubePainter.end();
 
     // update status to track user behavior
@@ -467,13 +468,13 @@ void MainWindow::on_btnArt_clicked(){
     textEdit->append( QString::number(rows*cols) + " pixel cubes have been transformed.");
 
     // create new pixmap using this big combination image
-    updatePixmap(artedImg);
+    updateViewport(artedImg);
 
     // update processing dialog title
     subDialog->setWindowTitle("Done!");
     textEdit->append("Done!");
 
-    // re-enable the buttons
+    // unlock the buttons
     lockButtons(false);
 
 }
@@ -506,7 +507,7 @@ void MainWindow::on_btnReset_clicked(){
     status = "loaded";
 
     // create new pixmap using original image
-    updatePixmap(*img);
+    updateViewport(*img);
 }
 
 // save image button
@@ -530,7 +531,7 @@ void MainWindow::on_btnExit_clicked(){
 /**************************** UTILS FUNCTIONS *****************************/
 
 // create new pixmap for displaying from the processed image
-void MainWindow::updatePixmap(QImage &processingImg){
+void MainWindow::updateViewport(QImage &processingImg){
 
     // update this var in order to track down which kind of image is being showed
     curImg = &processingImg;
@@ -562,9 +563,9 @@ void MainWindow::updatePixmap(QImage &processingImg){
 
 // set the mark point ratio upon combo box triggering
 void MainWindow::on_boxMode_activated(const QString &mode){
-    // from 0 to 100 (percentage). after passing in pixelcube constructor
-    // I will devide them by 100 by then. this way I can avoid double casting here
-    // rather than using 0, 1/4, 1/2, 3/4
+    // 4 mark points have value from 0 to 100 (percentage). But currently they are integers,
+    // I will devide them by 100 to get percentage after I pass it in the sample image process.
+    // Rather than using 0, 1/4, 1/2, 3/4, I can avoid double casting this way.
 
     if(mode == "Fullsize")          { p1 = 0;   p2 = 100;   p3 = 0;     p4 =100;}
     else if(mode == "Central")      { p1 = 25;  p2 = 75;    p3 = 25;    p4 = 75;}
@@ -623,7 +624,7 @@ void MainWindow::processDialog(){
 // update progress bar value
 void MainWindow::updateProgressBar(int size){
 
-    // update counter base on total number of sample images
+    // update counter value based on total number of iteration need to be done
     progressCounter +=  100/((double)(size));
 
     // round up the counter to be able to get 100% at the end of

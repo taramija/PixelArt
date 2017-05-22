@@ -1,0 +1,32 @@
+\BOOKMARK [1][-]{section.1}{Knowledge and techniques used in the project}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Data type, variable and scope}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Built-in and customized functions}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Condition statement}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{List, array, vector and struct}{section.1}% 5
+\BOOKMARK [2][-]{subsection.1.5}{Loops}{section.1}% 6
+\BOOKMARK [2][-]{subsection.1.6}{Pointer}{section.1}% 7
+\BOOKMARK [2][-]{subsection.1.7}{Class}{section.1}% 8
+\BOOKMARK [2][-]{subsection.1.8}{QT UI and utils}{section.1}% 9
+\BOOKMARK [1][-]{section.2}{Method and approaches}{}% 10
+\BOOKMARK [2][-]{subsection.2.1}{Main functions}{section.2}% 11
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Load button}{subsection.2.1}% 12
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Pixelize button}{subsection.2.1}% 13
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Art it button}{subsection.2.1}% 14
+\BOOKMARK [2][-]{subsection.2.2}{Utils/auxiliary functions}{section.2}% 15
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Centering the program}{subsection.2.2}% 16
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Cube size selectors}{subsection.2.2}% 17
+\BOOKMARK [3][-]{subsubsection.2.2.3}{UpdateRowNColAmount}{subsection.2.2}% 18
+\BOOKMARK [3][-]{subsubsection.2.2.4}{Introduction/about label}{subsection.2.2}% 19
+\BOOKMARK [3][-]{subsubsection.2.2.5}{Reset button}{subsection.2.2}% 20
+\BOOKMARK [3][-]{subsubsection.2.2.6}{Save image}{subsection.2.2}% 21
+\BOOKMARK [3][-]{subsubsection.2.2.7}{Tracking user behaviors}{subsection.2.2}% 22
+\BOOKMARK [3][-]{subsubsection.2.2.8}{Lock ui}{subsection.2.2}% 23
+\BOOKMARK [3][-]{subsubsection.2.2.9}{Prompt dialog and progress indicator}{subsection.2.2}% 24
+\BOOKMARK [3][-]{subsubsection.2.2.10}{Mode selectors}{subsection.2.2}% 25
+\BOOKMARK [3][-]{subsubsection.2.2.11}{Random poses}{subsection.2.2}% 26
+\BOOKMARK [3][-]{subsubsection.2.2.12}{Scaling}{subsection.2.2}% 27
+\BOOKMARK [3][-]{subsubsection.2.2.13}{Keep sample images}{subsection.2.2}% 28
+\BOOKMARK [3][-]{subsubsection.2.2.14}{Watermark}{subsection.2.2}% 29
+\BOOKMARK [2][-]{subsection.2.3}{Useful techniques / tricks}{section.2}% 30
+\BOOKMARK [3][-]{subsubsection.2.3.1}{QApplication::processEvents}{subsection.2.3}% 31
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Free memory}{subsection.2.3}% 32

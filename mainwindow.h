@@ -50,7 +50,7 @@ private slots:
     void on_btnExit_clicked();                          // exit program
 
     /* util functions */
-    void updatePixmap(QImage &processingImg);           // update new pixmap
+    void updateViewport(QImage &processingImg);           // update new pixmap
     void updateRowNColAmount(QImage &processingImg);    // update grid size
     void on_boxMode_activated(const QString &mode);     // mode dropdown list
     void processDialog();                               // open progress dialog
